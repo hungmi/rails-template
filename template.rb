@@ -28,9 +28,9 @@ end
 
 def create_admin_routes
   route "get 'admin', to: redirect('/')"
-  route do <<-RUBY.strip_heredoc
-      namespace :#{options[:namespace]} do
-        resources :#{plural_name}
+  inject_into_file "config/routes.rb", before: /^end/ do <<-RUBY.strip_heredoc
+      namespace :admin do
+        resources :users
         get 'signin', to: 'sessions#new'
         post 'signin', to: 'sessions#create'
         delete 'logout', to: 'sessions#destroy'
@@ -49,8 +49,8 @@ end
 
 ## 以下生成管理員、登入頁、登入授權
 def create_user_model
-  `rails g model user name:string role:integer password_digest:string`
-  template "model/user.rb", "app/models/user.rb"
+  # generate "model", "user name:string role:integer password_digest:string"
+  # template "model/user.rb", "app/models/user.rb", force: true
 end
 
 def copy_session_files
@@ -61,8 +61,8 @@ def copy_session_files
 end
 
 def copy_rake_files
-  rakefile "rake/admin_user.rake"
-  rakefile "rake/dev.rake"
+  copy_file "rake/admin_user.rake", "lib/tasks/admin_user.rake"
+  copy_file "rake/dev.rake", "lib/tasks/dev.rake"
 end
 
 ## 以上生成管理員、登入頁、登入授權
@@ -77,12 +77,14 @@ def copy_vendor_files
 end
 
 def generate_user_dashboard
-  `rails g dashboard users name:string role:integer password:string password_confirmation:string password_digest:string`
+  `rails g dashboard users name:string role:integer password:string password_confirmation:string password_digest:string -s`
 end
 
 def override_files
   copy_file "application_controller.rb", "app/controllers/application_controller.rb", force: true
   copy_file "application_helper.rb", "app/helpers/application_helper.rb", force: true
+  remove_file "app/assets/stylesheets/application.css"
+  template "application.scss", "app/assets/stylesheets/application.scss"
 end
 
 def add_gems
@@ -101,19 +103,21 @@ end
 
 def setup_locale_and_timezone
   application do
-    'config.i18n.default_locale = "ja"'
-    'config.time_zone = "Tokyo"'
+    "config.i18n.default_locale = 'zh-TW'\nconfig.time_zone = 'Taipei'"
   end
+  copy_file "zh-TW.yml", "config/locales/zh-TW.yml"
 end
 
 def setup_es6_and_s3_production
-  gsub_file 'app/config/environmenrts/production.rb', 'config.assets.js_compressor = :uglifier', 'config.assets.js_compressor = Uglifier.new(harmony: true)'
-  gsub_file 'app/config/environmenrts/production.rb', 'config.active_storage.service = :local', 'config.active_storage.service = :amazon'
+  gsub_file 'config/environments/production.rb', 'config.assets.js_compressor = :uglifier', 'config.assets.js_compressor = Uglifier.new(harmony: true)'
+  gsub_file 'config/environments/production.rb', 'config.active_storage.service = :local', 'config.active_storage.service = :amazon'
 end
 
 def setup_environment_rb
-  append_to_file 'app/config/environmenrt.rb' do <<-RUBY.strip_heredoc
-
+  append_to_file 'config/environment.rb' do <<-RUBY.strip_heredoc
+      
+      require "browser/aliases"
+      Browser::Base.include(Browser::Aliases)
       ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
         html_tag.html_safe
       end
@@ -121,21 +125,31 @@ def setup_environment_rb
   end
 end
 
+def copy_dashbaord_generator
+  directory "dashboard", "lib/generators/dashboard"
+end
+
 #---------------------
 add_template_repository_to_source_path
 add_gems
 create_admin_files
 create_admin_routes
-create_user_model
-
-after_bundle do
-  generate "pundit:install"
-  generate_user_dashboard
-  rake 'db:build'
-end
-
 setup_assets_rb
 copy_session_files
-copy_rake_files
 copy_vendor_files
+copy_rake_files
 override_files
+setup_locale_and_timezone
+setup_es6_and_s3_production
+setup_environment_rb
+copy_dashbaord_generator
+
+after_bundle do
+  run "spring stop"
+  generate "pundit:install"
+  `rails active_storage:install`
+  create_user_model
+  generate_user_dashboard
+  rake 'db:rebuild'
+end
+

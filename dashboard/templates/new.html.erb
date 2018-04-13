@@ -1,0 +1,5 @@
+<%%= link_to <%= options[:namespace] %>_<%= plural_route_name %>_path, class: "btn btn-link" do %>
+  &#8592; <%%= I18n.t('text.back') %>
+<%% end %>
+<h1 class="h2"><%%= I18n.t('text.new') %><%%= <%= class_name.constantize %>.model_name.human %></h1>
+<%%= render "<%= options[:namespace] %>/<%= plural_table_name %>/form", <%= model_resource_name %>: @<%= model_resource_name %> %>

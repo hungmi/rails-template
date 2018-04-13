@@ -1,0 +1,10 @@
+<%%= search_form_for [:<%= options[:namespace] %>, @q] do |f| %>
+	<div class="form-row">
+    <div class="form-group col-12">
+      <%%= f.label @nav_search_symbol, I18n.t("text.filter.#{@nav_search_symbol.to_s}") %>
+      <%%= f.search_field @nav_search_symbol, class: "form-control" %>
+    </div>
+  </div>
+  <%%= link_to I18n.t("text.clear"), admin_<%= plural_table_name %>_path, class: "btn btn-link text-danger btn-sm" %>
+  <%%= f.submit I18n.t("text.apply"), class: "btn btn-secondary float-right btn-sm" %>
+<%% end %>

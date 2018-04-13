@@ -1,0 +1,18 @@
+<%%= form_with model: [:<%= options[:namespace] %>, <%= model_resource_name %>], local: true, class: "mb-5" do |f| %>
+  <div class="row">
+    <div class="offset-lg-3 col-lg-6"><% attributes_names.map do |name| %>
+      <div class="form-group <%%= <%= model_resource_name %>.errors[:<%= name %>].present? ? 'has-danger' : '' %>">
+        <%%= f.label :<%= name %> %>
+        <%%= f.text_field :<%= name %>, class: "form-control #{<%= model_resource_name %>.errors[:<%= name %>].present? ? 'is-invalid' : ''}" %>
+        <%% if <%= model_resource_name %>.errors[:<%= name %>].present? %>
+    	    <div class="invalid-feedback">
+    	      <%%= <%= model_resource_name %>.errors[:<%= name %>].join(", ") %>
+    	    </div>
+        <%% end %>
+      </div>
+    <% end %>
+      <%%= link_to I18n.t('text.cancel'), admin_<%= plural_table_name %>_path, class: "btn btn-link text-danger" %>
+      <%%= f.submit class: "btn btn-primary float-right" %>
+    </div>
+  </div>
+<%% end %>

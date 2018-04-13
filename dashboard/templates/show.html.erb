@@ -1,0 +1,10 @@
+<%%= link_to <%= options[:namespace] %>_<%= plural_route_name %>_path(anchor: "<%= model_resource_name %>-#{@<%= model_resource_name %>.id}"), class: "btn btn-link" do %>
+  &#8592; <%%= I18n.t('text.back') %>
+<%% end %>
+<div class="row">
+  <div class="col-lg-9">
+  	<div class="row">
+			<%%= render @<%= model_resource_name %> %>
+		</div>
+	</div>
+</div>

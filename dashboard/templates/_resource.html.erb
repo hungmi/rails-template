@@ -1,0 +1,23 @@
+<div class="col-sm-6 col-md-4 mb-4" id="<%= model_resource_name %>-<%%= <%= model_resource_name %>.id %>">
+	<div class="card p-3">
+		<div class="list-group list-group-flush"><% attributes_names.map do |name| %>
+		  <li class="list-group-item flex-column align-items-start">
+		    <div class="d-flex w-100 justify-content-between">
+		      <h5 class="mb-1"><%%= <%= class_name.constantize %>.human_attribute_name("<%= name %>") %></h5>
+		    </div>
+		    <p class="mb-1">
+		    	<%% if <%= model_resource_name %>.<%= name %>.present? %>
+	          <%%= <%= model_resource_name %>.<%= name %> %>
+	        <%% else %>
+	          <span class="text-muted"><%%= I18n.t("text.attr_no_value") %></span>
+	          <span class="badge badge-pill badge-warning"><%%= I18n.t("text.hint") %></span>
+	        <%% end %>
+	      </p>
+		  </li><% end %>
+		  <li class="list-group-item flex-column align-items-start">
+	      <%%= link_to I18n.t('text.edit'), edit_admin_<%= model_resource_name %>_path(<%= model_resource_name %>), class: "btn btn-primary" %>
+	      <%%= link_to I18n.t('text.destroy'), [:<%= options[:namespace] %>, <%= model_resource_name %>], method: :delete, data: { confirm: I18n.t("text.confirm_destroy") }, class: "btn btn-danger btn-sm float-right" %>
+	    </li>
+		</div>
+	</div>
+</div>

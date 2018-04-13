@@ -1,4 +1,4 @@
-class <%= options[:namespace].camelize %>Policy < ApplicationPolicy
+class AdminPolicy < ApplicationPolicy
 	def index?
     user.present?
   end

@@ -1,4 +1,4 @@
-class <%= options[:namespace].camelize %>::SessionPolicy < ApplicationPolicy
+class Admin::SessionPolicy < ApplicationPolicy
 	def new?
 		true
 	end

@@ -1,0 +1,40 @@
+<h1 class="h2">
+  <%%= <%= class_name.constantize %>.model_name.human %><%%= I18n.t("text.index") %>
+  <%% unless not_desktop? %>
+	  <%%= link_to "#<%= singular_table_name %>AdvanceSearch", class: "d-print-none btn btn-link float-right d-none d-lg-inline-block", data: { toggle: "collapse" } do %>
+	  	<i class="material-icons">&#xE152;</i>
+	  <%% end %>
+	<%% end %>
+</h1>
+
+<%% unless not_desktop? %>
+	<div class="d-print-none mb-4 collapse <%%= 'show' if params[:q].present? %>" id="<%= singular_table_name %>AdvanceSearch">
+		<div class="card">
+			<div class="card-body">
+				<%%= render "filter" %>
+			</div>
+		</div>
+	</div>
+	<div class="mt-2 mb-4 text-right <%%= 'd-none' unless params[:q].present? %>">
+		<%%= I18n.t("text.search_result") %>：<%%= @<%= plural_table_name %>.size %>
+	</div>
+<%% end %>
+
+<div class="row">
+  <%%= render @<%= plural_table_name %> %>
+</div>
+
+<div class="btn-abs-wrapper">
+	<%%= link_to new_<%= options[:namespace] %>_<%= singular_table_name %>_path, class: "btn btn-success" do %>
+		<i class="material-icons">&#xE145;</i>
+	<%% end %>
+	<%% if not_desktop? %>
+		<%%= link_to "#", class: "btn btn-secondary d-lg-none", data: { toggle: "modal", target: "#searchModal" } do %>
+	    <i class="material-icons">&#xE8B6;</i>
+	  <%% end %>
+  <%% end %>
+</div>
+
+<%% if not_desktop? %>
+  <%%= render "<%= options[:namespace] %>/common/search_modal" %>
+<%% end %>

@@ -6,7 +6,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <%% ["post"].each do |singular_name| %>
+      <%% ["user"].each do |singular_name| %>
       <li class='nav-item <%%= 'active' if controller_name == singular_name.pluralize %>'>
         <a class="nav-link py-sm-2 py-3" href="/admin/<%%= singular_name.pluralize %>"><%%= I18n.t("activerecord.models.#{singular_name}") %></a>
       </li>
