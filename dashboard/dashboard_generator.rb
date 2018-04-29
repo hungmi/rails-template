@@ -1,34 +1,32 @@
 require "rails/generators/resource_helpers"
-
 module Rails
   module Generators
-		class DashboardGenerator < Rails::Generators::NamedBase
-		  source_root File.expand_path('templates', __dir__)
+    class DashboardGenerator < Rails::Generators::NamedBase
+      source_root File.expand_path('templates', __dir__)
       include ResourceHelpers
       check_class_collision suffix: "Controller"
-		  class_option :namespace, type: :string, default: 'admin'
-		  class_option :orm, banner: "NAME", type: :string, required: true,
-                         desc: "ORM to generate the controller for"
-      argument :attributes, type: :array, default: [], banner: "field:type field:type"
-		  # hook_for :scaffold_controller, as: :controller
-		  # def create_model_file
-		  # 	template 'model.rb', "app/models/#{file_name}.rb"
-		  # end
+      class_option :namespace, type: :string, default: 'admin'
+      class_option :orm, banner: "NAME", type: :string, required: true, desc: "ORM to generate the controller for"
+      # argument :attributes, type: :array, default: [], banner: "field[:type][:index][:uniq] field[:type][:index][:uniq]"
+      # hook_for :scaffold_controller, as: :controller
+      # def create_model_file
+      #   template 'model.rb', "app/models/#{file_name}.rb"
+      # end
 
       def create_model
-      	# creates the migration file for the model.
-      	generate "model", "#{file_name} #{attributes_names.join(' ')}"
-    	end
+        # creates the migration file for the model.
+        generate "model", "#{file_name} #{args.join(' ')}"
+      end
 
-		  def create_controller_file
-		  	template 'controller.rb', "app/controllers/#{options[:namespace]}/#{plural_name}_controller.rb"
-		  end
+      def create_controller_file
+        template 'controller.rb', "app/controllers/#{options[:namespace]}/#{plural_name}_controller.rb"
+      end
 
-		  def create_policy_file
-		  	template 'policy.rb', "app/policies/#{options[:namespace]}/#{singular_name}_policy.rb"
-		  end
+      def create_policy_file
+        template 'policy.rb', "app/policies/#{options[:namespace]}/#{singular_name}_policy.rb"
+      end
 
-		  def copy_view_files
+      def copy_view_files
         available_views.each do |view|
           filename = "#{view}.html.erb"
           template filename, "app/views/#{options[:namespace]}/#{plural_name}/#{filename}"
@@ -44,7 +42,7 @@ module Rails
       end
 
       def create_css_file
-      	template 'dashboard.scss', "app/assets/stylesheets/#{options[:namespace]}/dashboard.scss"
+        template 'dashboard.scss', "app/assets/stylesheets/#{options[:namespace]}/dashboard.scss"
         append_file 'app/assets/stylesheets/admin.scss' do
           "\n@import 'admin/dashboard';"
         end
@@ -55,21 +53,28 @@ module Rails
       end
 
       def create_routes
-      	inject_into_file 'config/routes.rb', after: "namespace :admin do\n" do
-					"\t\tresources :#{plural_name}\n"
-				end	
+        inject_into_file 'config/routes.rb', after: "namespace :admin do\n" do
+          "\t\tresources :#{plural_name}\n"
+        end 
       end
 
       # hook_for :resource_route, required: true
       # hook_for :test_framework
 
-    private
+      private
 
       def available_views
         %w(index edit show new _form)
       end
-		end
-	end
+
+      def attributes_names
+        # 此方法似乎本來就定義在 rails generators 的某處，但會變成該 class 的 array，不好用，所以重新產生
+        args.map { |arg| arg.split(":")[0] }
+      end
+
+
+    end
+  end
 end
 
 # frozen_string_literal: true

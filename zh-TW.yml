@@ -62,17 +62,8 @@ zh-TW:
         password_confirmation: 確認密碼
         new_password: 新密碼
         new_password_confirmation: 確認新密碼
-    order_item_status:
-      not_yet_shipped: 未発送
-      shipped: 発送しました
-      delivered: 配達しました
-    order_item_deliver_period:
-      up: 上旬
-      middle: 中旬
-      down: 下旬
     user_role:
-      admin: アドミニストレータ
-      supplier: メーカー
+      admin: 管理員
     errors:
       messages:
         record_invalid: "校驗失敗: %{errors}"

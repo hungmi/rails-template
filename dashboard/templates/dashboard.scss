@@ -12,11 +12,19 @@ body.admin {
 	  display: flex;
 	  flex-direction: column;
 		.btn {
-			@extend .rounded-circle;
-			height: 55px;
-			width: 55px;
+			border-radius: 50%;
+	  	height: 55px;
+	  	width: 55px;
 			margin: 15px;
-			padding: 0.9rem 0.9rem;
+			padding: 1rem;
+	  	@media (max-width: 767px) {
+	  		height: 40px;
+		  	width: 40px;
+		  	padding: 10px;
+		  	.material-icons {
+		  		font-size: 20px;
+		  	}
+	  	}
 		}
 	}
 }

@@ -30,7 +30,6 @@ def create_admin_routes
   route "get 'admin', to: redirect('/')"
   inject_into_file "config/routes.rb", before: /^end/ do <<-RUBY.strip_heredoc
       namespace :admin do
-        resources :users
         get 'signin', to: 'sessions#new'
         post 'signin', to: 'sessions#create'
         delete 'logout', to: 'sessions#destroy'
@@ -48,9 +47,10 @@ def setup_assets_rb
 end
 
 ## 以下生成管理員、登入頁、登入授權
-def create_user_model
-  # generate "model", "user name:string role:integer password_digest:string"
-  # template "model/user.rb", "app/models/user.rb", force: true
+def generate_user_dashboard
+  `rails g model users name:string role:integer password:string password_confirmation:string password:digest`
+  `rails g dashboard users name:string role:integer password:string password_confirmation:string -s`
+  template "model/user.rb", "app/models/user.rb", force: true
 end
 
 def copy_session_files
@@ -74,10 +74,6 @@ def copy_vendor_files
   copy_file "vendor/css/_bootswatch.scss", "#{default_vendor_folder_path}/css/_bootswatch.scss"
   copy_file "vendor/css/_variables.scss", "#{default_vendor_folder_path}/css/_variables.scss"
   copy_file "vendor/css/bootstrap.min.css", "#{default_vendor_folder_path}/css/bootstrap.min.css"
-end
-
-def generate_user_dashboard
-  `rails g dashboard users name:string role:integer password:string password_confirmation:string password_digest:string -s`
 end
 
 def override_files
@@ -148,7 +144,6 @@ after_bundle do
   run "spring stop"
   generate "pundit:install"
   `rails active_storage:install`
-  create_user_model
   generate_user_dashboard
   rake 'db:rebuild'
 end
