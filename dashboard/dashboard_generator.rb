@@ -37,8 +37,8 @@ module Rails
         filename = "_#{singular_name}.html.erb"
         template "_resource.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/#{filename}"
         template "_filter.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_filter.html.erb"
-        template "_search_modal.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_search_modal.html.erb"
-        template "_short_search_input_group.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_short_search_input_group.html.erb"
+        # template "_search_modal.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_search_modal.html.erb"
+        # template "_short_search_input_group.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_short_search_input_group.html.erb"
       end
 
       def create_css_file

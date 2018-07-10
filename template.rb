@@ -24,6 +24,8 @@ def create_admin_files
   template "admin/admin.js", "app/assets/javascripts/admin.js"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
+  template "_search_modal.html.erb", "app/views/admin/_search_modal.html.erb"
+  template "_short_search_input_group.html.erb", "app/views/admin/_short_search_input_group.html.erb"
 end
 
 def create_admin_routes
@@ -48,8 +50,10 @@ end
 
 ## 以下生成管理員、登入頁、登入授權
 def generate_user_dashboard
-  `rails g model users name:string role:integer password:string password_confirmation:string password:digest`
-  `rails g dashboard users name:string role:integer password:string password_confirmation:string -s`
+  # 首先產生不需要密碼及確認密碼的 migration file
+  `rails g model users name:string:index role:integer password:digest`
+  # 然後再產生其他的 model, view 等等的，不要覆蓋 migration file 就好
+  `rails g dashboard users name:string:index role:integer password:string password_confirmation:string`
   template "model/user.rb", "app/models/user.rb", force: true
 end
 

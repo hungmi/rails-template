@@ -1,8 +1,9 @@
 Description:
-    Explain the generator
+    Dashboard generator helps you generate not only model, controller but also basic views.
 
 Example:
-    rails generate dashboard Thing
+    rails generate dashboard Thing name:string:index:uniq status:integer
 
     This will create:
-        what/will/it/create
+        1. Thing model and its migration, controller.
+        2. admin/things basic views containing CRUD and basic search function.
