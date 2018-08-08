@@ -7,10 +7,10 @@
         </button>
       </div>
       <div class="modal-body">
-      	<%%= search_form_for [:<%= options[:namespace] %>, @q], class: "form-row align-items-center my-2 my-lg-0" do |f| %>
+      	<%%= search_form_for [:admin, @q], class: "form-row align-items-center my-2 my-lg-0" do |f| %>
 		      <div class="col-12 mb-3">
 		        <div class="input-group">
-		          <%%= render "short_search_input_group", f: f %>
+		          <%%= render "admin/common/short_search_input_group", f: f %>
 		        </div>
 		        <small id="emailHelp" class="form-text text-muted"><%%= @nav_search_placeholder %></small>
 		      </div>
