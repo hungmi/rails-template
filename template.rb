@@ -24,8 +24,8 @@ def create_admin_files
   template "admin/admin.js", "app/assets/javascripts/admin.js"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
-  template "_search_modal.html.erb", "app/views/admin/_search_modal.html.erb"
-  template "_short_search_input_group.html.erb", "app/views/admin/_short_search_input_group.html.erb"
+  template "_search_modal.html.erb", "app/views/admin/common/_search_modal.html.erb"
+  template "_short_search_input_group.html.erb", "app/views/admin/common/_short_search_input_group.html.erb"
 end
 
 def create_admin_routes
