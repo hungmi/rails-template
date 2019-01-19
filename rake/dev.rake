@@ -14,26 +14,24 @@ namespace :dev do
   desc "backup db"
   task :backup => [:environment] do |t, args|
     db_name = Rails.application.config.database_configuration[Rails.env]["database"]
+    app_name = Rails.application.class.parent_name.underscore
     now = Time.now.strftime('%Y%m%d%H%M%S')
     puts "#{now}開始備份完整資料庫..."
     if Rails.env.production?
-      @file_name = "longyun_pro_#{now}.dump"
-      @local_dir = "/home/deploy/railsapp/db_backups"
+      @file_name = "#{app_name}_pro_#{now}.dump"
+      `mkdir "/home/deploy/railsapp/#{app_name}/db_backups"`
+      @local_dir = "/home/deploy/railsapp/#{app_name}/db_backups"
       # 記得要去 /home/deploy 創一個 .pgpass 然後 sudo chmod 600 /home/deploy/.pgpass
-      `PGPASSFILE=~/.pgpass pg_dump -Fc --no-acl --no-owner -h localhost -U railsapp railsapp_production > "#{@local_dir}/#{@file_name}"`
+      `PGPASSFILE=/home/deploy/.pgpass pg_dump -Fc --no-acl --no-owner -h localhost -U deploy #{db_name} > "#{@local_dir}/#{@file_name}"`
       puts "開始上傳..."
-      @fog = UploadService.fog
-      @dir = @fog.directories.get("longyun-db-backups")
-      # Rake::Task["dev:upload"].invoke()
-      file = @dir.files.create ({
-        :key    => @file_name,
-        :body   => File.open("#{@local_dir}/#{@file_name}"),
-        :public => false
-      })
-      puts "上傳成功" #，link: #{file.public_url}"
+      @dbbackup_record = Dbbackup.new(name: @file_name)
+      @dbbackup_record.file.attach(io: File.open("#{@local_dir}/#{@file_name}"), filename: @file_name)
+      @dbbackup_record.save
+      puts "上傳成功，link: #{@dbbackup_record.file.service_url}"
     else
-      @file_name = "longyun_dev_#{now}.dump"
-      @local_dir = "/Users/hungmi/Documents/longyun_aws"
+      @file_name = "#{app_name}_dev_#{now}.dump"
+      `mkdir "/Users/hungmi/Documents/#{app_name}_aws"`
+      @local_dir = "/Users/hungmi/Documents/#{app_name}_aws"
       `pg_dump -Fc --no-acl --no-owner -h localhost -U hungmi #{db_name} > "#{@local_dir}/#{@file_name}"`
       puts "備份完成"
     end

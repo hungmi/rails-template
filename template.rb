@@ -23,9 +23,11 @@ def create_admin_files
   template "admin/admin.scss", "app/assets/stylesheets/admin.scss"
   template "admin/admin.js", "app/assets/javascripts/admin.js"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
+  copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
   template "_search_modal.html.erb", "app/views/admin/common/_search_modal.html.erb"
   template "_short_search_input_group.html.erb", "app/views/admin/common/_short_search_input_group.html.erb"
+  copy_file "record_not_found.js.erb", "app/views/admin/common/record_not_found.js.erb"
 end
 
 def create_admin_routes
@@ -58,7 +60,7 @@ def generate_user_dashboard
 end
 
 def copy_session_files
-  copy_file "sessions/sessions.scss", "app/assets/stylesheets/admin/sessions.scss"
+  copy_file "sessions/sessions.sass", "app/assets/stylesheets/admin/sessions.sass"
   template "sessions/signin.html.erb", "app/views/admin/sessions/new.html.erb"
   template "sessions/session_controller.rb", "app/controllers/admin/sessions_controller.rb"
   template "sessions/session_policy.rb", "app/policies/admin/session_policy.rb"
@@ -99,6 +101,13 @@ def add_gems
   gem "aws-sdk-s3", require: false
   gem 'bcrypt', '~> 3.1.7'
   gem 'redis', '~> 4.0'
+  gem 'pagy'
+  gem 'whenever', require: false
+end
+
+def copy_gem_setting_files
+  copy_file "schedule.rb", "config/schedule.rb"
+  copy_file "pagy.rb", "config/initializers/pagy.rb"
 end
 
 def setup_locale_and_timezone
@@ -129,6 +138,14 @@ def copy_dashbaord_generator
   directory "dashboard", "lib/generators/dashboard"
 end
 
+def setup_dbbackup_rb
+  append_to_file 'app/models/dbbackup.rb' do <<-RUBY.strip_heredoc
+      
+      has_one_attached :file
+    RUBY
+  end
+end
+
 #---------------------
 add_template_repository_to_source_path
 add_gems
@@ -147,8 +164,12 @@ copy_dashbaord_generator
 after_bundle do
   run "spring stop"
   generate "pundit:install"
+  `wheneverize .`
   `rails active_storage:install`
   generate_user_dashboard
+  `rails g model dbbackup name:string`
+  setup_dbbackup_rb
   rake 'db:rebuild'
+  copy_gem_setting_files
 end
 

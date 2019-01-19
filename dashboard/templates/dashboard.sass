@@ -1,0 +1,30 @@
+body.admin
+	table.table
+		thead > tr > th
+			border-top: 0px
+	.btn-abs-wrapper
+		position: fixed
+		z-index: 1
+		text-align: center
+		right: 15px
+		bottom: 15px
+		display: flex
+		flex-direction: column
+		.btn
+			margin: 15px
+			padding: 1rem
+	  	@media (max-width: 767px)
+	  		height: 40px
+		  	width: 40px
+		  	padding: 10px
+		  	.material-icons
+		  		font-size: 20px
+	.btn.btn-icon--circle
+		height: 55px
+		width: 55px
+		position: relative
+		border-radius: 50%
+		.material-icons
+			position: absolute
+			transform: translateX(-50%) translateY(-50%)
+			top: 50%

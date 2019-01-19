@@ -5,7 +5,7 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
   # GET <%= route_url %>
   def index
     authorize [:<%= options[:namespace] %>, :<%= singular_table_name %>], :index?
-    @<%= plural_table_name %> = @q.result(distinct: true).order(updated_at: :desc)
+    @pagy, @<%= plural_table_name %> = pagy(@q.result(distinct: true).order(updated_at: :desc), items: 20)
   end
 
   # GET <%= route_url %>/1

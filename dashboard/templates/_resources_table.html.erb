@@ -1,0 +1,24 @@
+<table class="table table-hover" id="js-<%= plural_table_name %>-tablesort">
+	<thead>
+		<tr>
+			<% attributes_names.map do |name| %>
+			<th><%%= <%= class_name.constantize %>.human_attribute_name("<%= name %>") %></th>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+		<%%= <%= plural_table_name %>.map do |<%= singular_table_name %>| %>
+			<tr><% attributes_names.map do |name| %>
+				<td><%%= <%= singular_table_name %>.<%= name %> %></td>
+			<% end %></tr>
+		<%% end %>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		new Tablesort(document.getElementById('js-<%= plural_table_name %>-tablesort'), {
+	    descending: true
+	  });
+	})
+</script>
