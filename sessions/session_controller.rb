@@ -12,7 +12,11 @@ class Admin::SessionsController < AdminController
 		@user = User.find_by_name(params[:session][:user_name])
 		if @user.present? && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
-			redirect_to (params[:session][:back_path] || root_path)
+			if params[:session][:back_path].present?
+      	redirect_to params[:session][:back_path]
+      else
+      	redirect_to admin_path
+      end
 		else
       flash.now[:danger] = "帳號或密碼錯誤。"
 			render :new

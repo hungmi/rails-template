@@ -6,15 +6,13 @@ body.admin {
 	}
 	.btn-abs-wrapper {
 		position: fixed;
+		z-index: 1;
 	  text-align: center;
 	  right: 15px;
 	  bottom: 15px;
 	  display: flex;
 	  flex-direction: column;
 		.btn {
-			border-radius: 50%;
-	  	height: 55px;
-	  	width: 55px;
 			margin: 15px;
 			padding: 1rem;
 	  	@media (max-width: 767px) {
@@ -25,6 +23,17 @@ body.admin {
 		  		font-size: 20px;
 		  	}
 	  	}
+		}
+	}
+	.btn.btn-icon--circle {
+		height: 55px;
+		width: 55px;
+		position: relative;
+		border-radius: 50%;
+		.material-icons {
+			position: absolute;
+			transform: translateX(-50%) translateY(-50%);
+			top: 50%;
 		}
 	}
 }

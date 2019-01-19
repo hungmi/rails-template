@@ -25,11 +25,11 @@
 </div>
 
 <div class="btn-abs-wrapper">
-	<%%= link_to new_<%= options[:namespace] %>_<%= singular_table_name %>_path, class: "btn btn-success" do %>
+	<%%= link_to new_<%= options[:namespace] %>_<%= singular_table_name %>_path, class: "btn btn-success btn-icon--circle" do %>
 		<i class="material-icons">&#xE145;</i>
 	<%% end %>
 	<%% if not_desktop? %>
-		<%%= link_to "#", class: "btn btn-secondary d-lg-none", data: { toggle: "modal", target: "#searchModal" } do %>
+		<%%= link_to "#", class: "btn btn-secondary d-lg-none btn-icon--circle", data: { toggle: "modal", target: "#searchModal" } do %>
 	    <i class="material-icons">&#xE8B6;</i>
 	  <%% end %>
   <%% end %>

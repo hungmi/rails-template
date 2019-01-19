@@ -89,8 +89,8 @@ end
 
 def add_gems
   gem 'bullet', group: [:development]
-  gem 'bootstrap', '~> 4.0.0'
-  gem 'awesome_rails_console'
+  gem 'bootstrap', '~> 4.1.1'
+  gem 'awesome_rails_console', group: [:development]
   gem 'pundit'
   gem 'sidekiq'
   gem "browser"
