@@ -16,6 +16,7 @@ module Rails
       def create_model
         # creates the migration file for the model.
         generate "model", "#{file_name} #{args.join(' ')}"
+        load "app/models/#{singular_name}.rb" # avoid uninitialized contant error
       end
 
       def create_controller_file
@@ -37,7 +38,7 @@ module Rails
         filename = "_#{singular_name}.html.erb"
         template "_resource.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/#{filename}"
         template "_filter.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_filter.html.erb"
-        template "_resource_table.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_#{plural_name}_table.html.erb"
+        template "_resources_table.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_#{plural_name}_table.html.erb"
         # template "_search_modal.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_search_modal.html.erb"
         # template "_short_search_input_group.html.erb", "app/views/#{options[:namespace]}/#{plural_name}/_short_search_input_group.html.erb"
       end

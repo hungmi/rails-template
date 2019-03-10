@@ -31,9 +31,10 @@ def create_admin_files
 end
 
 def create_admin_routes
-  route "get 'admin', to: redirect('/')"
+  route "get 'admin', to: redirect('/admin/users')"
   inject_into_file "config/routes.rb", before: /^end/ do <<-RUBY.strip_heredoc
       namespace :admin do
+        resources :users
         get 'signin', to: 'sessions#new'
         post 'signin', to: 'sessions#create'
         delete 'logout', to: 'sessions#destroy'
@@ -77,9 +78,10 @@ def copy_vendor_files
   default_vendor_folder_path = "vendor/assets"
   copy_file "vendor/js/jquery.min.js", "#{default_vendor_folder_path}/js/jquery.min.js"
   copy_file "vendor/js/jquery.timeago.js", "#{default_vendor_folder_path}/js/jquery.timeago.js"
-  copy_file "vendor/css/_bootswatch.scss", "#{default_vendor_folder_path}/css/_bootswatch.scss"
-  copy_file "vendor/css/_variables.scss", "#{default_vendor_folder_path}/css/_variables.scss"
+  copy_file "vendor/js/tablesort.min.js", "#{default_vendor_folder_path}/js/tablesort.min.js"
+  copy_file "vendor/js/tablesort.number.min.js", "#{default_vendor_folder_path}/js/tablesort.number.min.js"
   copy_file "vendor/css/bootstrap.min.css", "#{default_vendor_folder_path}/css/bootstrap.min.css"
+  copy_file "vendor/css/tablesort.min.css", "#{default_vendor_folder_path}/css/tablesort.min.css"
 end
 
 def override_files
@@ -90,7 +92,7 @@ def override_files
 end
 
 def add_gems
-  gem 'bullet', group: [:development]
+  # gem 'bullet', group: [:development]
   gem 'bootstrap', '~> 4.1.1'
   gem 'awesome_rails_console', group: [:development]
   gem 'pundit'
@@ -106,7 +108,7 @@ def add_gems
 end
 
 def copy_gem_setting_files
-  copy_file "schedule.rb", "config/schedule.rb"
+  copy_file "schedule.rb", "config/schedule.rb", force: true
   copy_file "pagy.rb", "config/initializers/pagy.rb"
 end
 
@@ -139,8 +141,7 @@ def copy_dashbaord_generator
 end
 
 def setup_dbbackup_rb
-  append_to_file 'app/models/dbbackup.rb' do <<-RUBY.strip_heredoc
-      
+  inject_into_file "app/models/dbbackup.rb", before: /^end/ do <<-RUBY.strip_heredoc
       has_one_attached :file
     RUBY
   end

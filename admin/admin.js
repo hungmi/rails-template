@@ -4,3 +4,5 @@
 //= require popper
 //= require bootstrap
 //= require jquery.timeago
+//= require tablesort.min
+//= require tablesort.number.min
