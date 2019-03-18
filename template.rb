@@ -56,8 +56,11 @@ def generate_user_dashboard
   # 首先產生不需要密碼及確認密碼的 migration file
   `rails g model users name:string:index role:integer password:digest`
   # 然後再產生其他的 model, view 等等的，不要覆蓋 migration file 就好
-  `rails g dashboard users name:string:index role:integer password:string password_confirmation:string`
-  template "model/user.rb", "app/models/user.rb", force: true
+  `rails g dashboard users name:string:index role:integer password:string password_confirmation:string --skip-creating-model true`
+  # 首先產生不需要密碼及確認密碼的 migration file
+  # `rails g migration create_users name:string:index role:integer password:digest -f`
+  template "admin_users/user.rb", "app/models/user.rb", force: true
+  copy_file "admin_users/_form.html.erb", "app/views/admin/users/_form.html.erb", force: true
 end
 
 def copy_session_files
@@ -170,6 +173,7 @@ after_bundle do
   generate_user_dashboard
   `rails g model dbbackup name:string`
   setup_dbbackup_rb
+  `rails db:environment:set RAILS_ENV=development`
   rake 'db:rebuild'
   copy_gem_setting_files
 end

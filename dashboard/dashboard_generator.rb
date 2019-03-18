@@ -6,6 +6,7 @@ module Rails
       include ResourceHelpers
       check_class_collision suffix: "Controller"
       class_option :namespace, type: :string, default: 'admin'
+      class_option :skip_creating_model, type: :boolean, default: false
       class_option :orm, banner: "NAME", type: :string, required: true, desc: "ORM to generate the controller for"
       # argument :attributes, type: :array, default: [], banner: "field[:type][:index][:uniq] field[:type][:index][:uniq]"
       # hook_for :scaffold_controller, as: :controller
@@ -14,9 +15,11 @@ module Rails
       # end
 
       def create_model
-        # creates the migration file for the model.
-        generate "model", "#{file_name} #{args.join(' ')}"
-        load "app/models/#{singular_name}.rb" # avoid uninitialized contant error
+        unless options[:skip_creating_model]
+          # creates the migration file for the model.
+          generate "model", "#{file_name} #{args.join(' ')}"
+          load "app/models/#{singular_name}.rb" # avoid uninitialized contant error
+        end
       end
 
       def create_controller_file

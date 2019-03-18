@@ -11,8 +11,43 @@
         <%% end %>
       </div>
     <% end %>
+
+      <%% if false %>
+      <div class="form-group <%%= <%= model_resource_name %>.errors[:<%= name %>].present? ? 'has-danger' : '' %>">
+        <%%= f.rich_text_area :<%= name %>, class: "form-control #{<%= model_resource_name %>.errors[:<%= name %>].present? ? 'is-invalid' : ''}" %>
+        <%% if <%= model_resource_name %>.errors[:<%= name %>].present? %>
+          <div class="invalid-feedback">
+            <%%= <%= model_resource_name %>.errors[:<%= name %>].join(", ") %>
+          </div>
+        <%% end %>
+      </div>
+      <%% end %>
+
+      <%% if false %> <!-- 請記得將 kind 取代掉 -->
+      <div class="form-group <%%= <%= model_resource_name %>.errors[:<%= name %>].present? ? 'has-danger' : '' %>">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <%% <%= class_name %>.kinds.keys.map do |name| %>
+            <label class="btn <%%= name == <%= model_resource_name %>.kind ? 'btn-primary active' : 'btn-secondary' %> <%%= <%= model_resource_name %>.errors[:kind].present? ? 'btn-danger' : '' %>">
+              <%%= radio_button_tag '<%= model_resource_name %>[kind]', name, name == <%= model_resource_name %>.kind %> <%%= name %>
+            </label>
+          <%% end %>
+        </div>
+        <%%= f.text_field :kind, class: "d-none form-control #{<%= model_resource_name %>.errors[:kind].present? ? 'is-invalid' : ''}" %>
+        <%% if <%= model_resource_name %>.errors[:<%= name %>].present? %>
+          <div class="invalid-feedback">
+            <%%= <%= model_resource_name %>.errors[:<%= name %>].join(", ") %>
+          </div>
+        <%% end %>
+      </div>
+      <%% end %>
       <%%= link_to I18n.t('text.cancel'), admin_<%= plural_table_name %>_path, class: "btn btn-link text-danger" %>
       <%%= f.submit class: "btn btn-primary float-right" %>
     </div>
   </div>
 <%% end %>
+
+<script type="text/javascript">
+  $("form").on("submit", function() {
+    $("input[name='<%= model_resource_name %>[kind]']").val( $("input[type='radio'][name='<%= model_resource_name %>[kind]']:checked")[0].value )
+  })
+</script>
