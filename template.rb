@@ -96,13 +96,11 @@ end
 
 def add_gems
   # gem 'bullet', group: [:development]
-  gem 'bootstrap', '~> 4.1.1'
   gem 'awesome_rails_console', group: [:development]
   gem 'pundit'
   gem 'sidekiq'
   gem "browser"
   gem 'ransack', github: 'activerecord-hackery/ransack'
-  gem 'mini_magick', '~> 4.8'
   gem "aws-sdk-s3", require: false
   gem 'bcrypt', '~> 3.1.7'
   gem 'redis', '~> 4.0'
@@ -117,7 +115,7 @@ end
 
 def setup_locale_and_timezone
   application do
-    "config.i18n.default_locale = 'zh-TW'\nconfig.time_zone = 'Taipei'"
+    "config.i18n.default_locale = 'zh-TW'\nconfig.time_zone = 'Taipei'\nconfig.active_storage.variant_processor = :vips"
   end
   copy_file "zh-TW.yml", "config/locales/zh-TW.yml"
 end
