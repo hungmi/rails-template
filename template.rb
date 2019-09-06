@@ -27,6 +27,7 @@ def create_admin_files
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
   template "_search_modal.html.erb", "app/views/admin/common/_search_modal.html.erb"
   template "_short_search_input_group.html.erb", "app/views/admin/common/_short_search_input_group.html.erb"
+  template "_resources_header.html.erb", "app/views/admin/common/_resources_header.html.erb"
   copy_file "record_not_found.js.erb", "app/views/admin/common/record_not_found.js.erb"
 end
 
@@ -115,7 +116,7 @@ end
 
 def setup_locale_and_timezone
   application do
-    "config.i18n.default_locale = 'zh-TW'\nconfig.time_zone = 'Taipei'\nconfig.active_storage.variant_processor = :vips"
+    "config.i18n.default_locale = 'zh-TW'\nconfig.time_zone = 'Taipei'"
   end
   copy_file "zh-TW.yml", "config/locales/zh-TW.yml"
 end
@@ -148,6 +149,17 @@ def setup_dbbackup_rb
   end
 end
 
+def setup_environment_js_for_bootstrap_in_webpack
+  insert_into_file "config/webpack/environment.js", after: "const { environment } = require('@rails/webpacker')\n" do
+    "const webpack = require('webpack')
+environment.plugins.append('Provide', new webpack.ProvidePlugin({
+  $: 'jquery',
+  jQuery: 'jquery',
+  Popper: ['popper.js', 'default']
+}))"
+  end
+end
+
 #---------------------
 add_template_repository_to_source_path
 add_gems
@@ -174,5 +186,6 @@ after_bundle do
   `rails db:environment:set RAILS_ENV=development`
   rake 'db:rebuild'
   copy_gem_setting_files
+  setup_environment_js_for_bootstrap_in_webpack
 end
 
