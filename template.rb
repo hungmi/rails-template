@@ -18,10 +18,12 @@ def add_template_repository_to_source_path
 end
 
 def create_admin_files
-  template "admin/admin_controller.rb", "app/controllers/admin_controller.rb"
-  template "admin/admin_policy.rb", "app/policies/admin_policy.rb"
-  template "admin/admin.scss", "app/assets/stylesheets/admin.scss"
-  template "admin/admin.js", "app/assets/javascripts/admin.js"
+  copy_file "admin/admin_controller.rb", "app/controllers/admin_controller.rb"
+  copy_file "admin/admin_policy.rb", "app/policies/admin_policy.rb"
+  copy_file "admin/admin.sass", "app/assets/stylesheets/admin.sass"
+  copy_file "admin/admin.js", "app/javascript/packs/admin.js"
+  copy_file "admin/previewable.js", "app/javascript/packs/previewable.js"
+  copy_file "admin/sortable.js", "app/javascript/packs/sortable.js"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
@@ -35,7 +37,6 @@ def create_admin_routes
   route "get 'admin', to: redirect('/admin/users')"
   inject_into_file "config/routes.rb", before: /^end/ do <<-RUBY.strip_heredoc
       namespace :admin do
-        resources :users
         get 'signin', to: 'sessions#new'
         post 'signin', to: 'sessions#create'
         delete 'logout', to: 'sessions#destroy'
@@ -80,12 +81,16 @@ end
 
 def copy_vendor_files
   default_vendor_folder_path = "vendor/assets"
-  copy_file "vendor/js/jquery.min.js", "#{default_vendor_folder_path}/js/jquery.min.js"
   copy_file "vendor/js/jquery.timeago.js", "#{default_vendor_folder_path}/js/jquery.timeago.js"
   copy_file "vendor/js/tablesort.min.js", "#{default_vendor_folder_path}/js/tablesort.min.js"
   copy_file "vendor/js/tablesort.number.min.js", "#{default_vendor_folder_path}/js/tablesort.number.min.js"
   copy_file "vendor/css/bootstrap.min.css", "#{default_vendor_folder_path}/css/bootstrap.min.css"
   copy_file "vendor/css/tablesort.min.css", "#{default_vendor_folder_path}/css/tablesort.min.css"
+end
+
+def copy_stimulus_files
+  copy_file "stimulus/index.js", "app/javascript/controllers/index.js"
+  copy_file "stimulus/hello_controller.js", "app/javascript/controllers/hello_controller.js"
 end
 
 def override_files
@@ -160,6 +165,10 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
   end
 end
 
+def yarn_add_bootstrap
+  `yarn add jquery bootstrap popper.js stimulus tablesort`
+end
+
 #---------------------
 add_template_repository_to_source_path
 add_gems
@@ -168,6 +177,7 @@ create_admin_routes
 setup_assets_rb
 copy_session_files
 copy_vendor_files
+copy_stimulus_files
 copy_rake_files
 override_files
 setup_locale_and_timezone
@@ -184,8 +194,10 @@ after_bundle do
   `rails g model dbbackup name:string`
   setup_dbbackup_rb
   `rails db:environment:set RAILS_ENV=development`
-  rake 'db:rebuild'
   copy_gem_setting_files
   setup_environment_js_for_bootstrap_in_webpack
+  yarn_add_bootstrap
+  `bin/rails action_text:install`
+  rake 'db:rebuild'
 end
 

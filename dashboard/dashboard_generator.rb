@@ -48,8 +48,8 @@ module Rails
 
       def create_css_file
         template 'dashboard.sass', "app/assets/stylesheets/#{options[:namespace]}/dashboard.sass"
-        append_file 'app/assets/stylesheets/admin.scss' do
-          "\n@import 'admin/dashboard';"
+        append_file 'app/assets/stylesheets/admin.sass' do
+          "\n@import 'admin/dashboard'"
         end
       end
 

@@ -16,7 +16,8 @@ zh-TW:
     filter: 篩選器
     apply: 應用
     clear: 清除
-    filter:
+    saving: 儲存中...
+    filters:
       id_eq: ID 等於
   flash:
     create_success: 建立成功。
@@ -25,11 +26,7 @@ zh-TW:
   activerecord:
     models:
       customer: 客戶
-      supplier: 工廠
-      workpiece: 工件
-      pair: 配組
       order_item: 訂單
-      procedure: 製程
       user: 使用者
     attributes:
       customer:
@@ -38,14 +35,8 @@ zh-TW:
         address: 地址
         payment_term: 付款區間
         note: 備註
-      workpiece:
-        code: 圖號
-        customer_id: 客戶
-      pair:
-        name: 配組名稱
       order_item:
         code: 訂購編號
-        workpiece_id: 圖號
         customer_id: 客戶
         amount: 數量
         price: 價格

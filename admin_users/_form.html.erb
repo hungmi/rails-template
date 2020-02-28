@@ -13,7 +13,7 @@
     
       <div class="form-group <%= user.errors[:role].present? ? 'has-danger' : '' %>">
         <%= f.label :role %>
-        <%= f.select :role, User.roles, {}, class: "form-control #{user.errors[:role].present? ? 'is-invalid' : ''}" %>
+        <%= f.select :role, User.roles.map { |k,v| k }, {}, class: "form-control #{user.errors[:role].present? ? 'is-invalid' : ''}" %>
         <% if user.errors[:role].present? %>
     	    <div class="invalid-feedback">
     	      <%= user.errors[:role].join(", ") %>
