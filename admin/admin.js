@@ -9,10 +9,12 @@ require("@rails/activestorage").start()
 require("channels")
 require("trix")
 require("@rails/actiontext")
-import "../packs/previewable.js"
+var tablesort = require('tablesort')
 import "../packs/sortable.js"
 import "controllers"
 
-document.addEventListener("DOMContentLoaded", function(){
-	console.log("hi")
+window.addEventListener("load", () => {
+	if ( document.body.classList.contains('admin-users-index') ) {
+		tablesort(document.querySelector("#js-users-tablesort"), { descending: true })
+	}
 })

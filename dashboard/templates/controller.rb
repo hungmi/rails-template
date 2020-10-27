@@ -29,7 +29,7 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
 
     if @<%= orm_instance.save %>
       flash[:success] = I18n.t('flash.create_success')
-      redirect_to <%= options[:namespace] %>_<%= plural_table_name %>_path(anchor: "<%= singular_table_name %>-#{@<%= singular_table_name %>.id}")
+      redirect_to edit_<%= options[:namespace] %>_<%= singular_table_name %>_path(<%= singular_table_name %>)
     else
       render :new
     end

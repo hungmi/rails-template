@@ -22,7 +22,6 @@ def create_admin_files
   copy_file "admin/admin_policy.rb", "app/policies/admin_policy.rb"
   copy_file "admin/admin.sass", "app/assets/stylesheets/admin.sass"
   copy_file "admin/admin.js", "app/javascript/packs/admin.js"
-  copy_file "admin/previewable.js", "app/javascript/packs/previewable.js"
   copy_file "admin/sortable.js", "app/javascript/packs/sortable.js"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
@@ -30,6 +29,8 @@ def create_admin_files
   template "_search_modal.html.erb", "app/views/admin/common/_search_modal.html.erb"
   template "_short_search_input_group.html.erb", "app/views/admin/common/_short_search_input_group.html.erb"
   template "_resources_header.html.erb", "app/views/admin/common/_resources_header.html.erb"
+  template "_image_field.html.erb", "app/views/admin/common/_image_field.html.erb"
+  template "_images_field.html.erb", "app/views/admin/common/_images_field.html.erb"
   copy_file "record_not_found.js.erb", "app/views/admin/common/record_not_found.js.erb"
 end
 
@@ -89,8 +90,7 @@ def copy_vendor_files
 end
 
 def copy_stimulus_files
-  copy_file "stimulus/index.js", "app/javascript/controllers/index.js"
-  copy_file "stimulus/hello_controller.js", "app/javascript/controllers/hello_controller.js"
+  copy_file "admin/stimulus/storage_previewable_controller.js", "app/javascript/packs/controllers/storage_previewable_controller.js"
 end
 
 def override_files
@@ -166,7 +166,7 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
 end
 
 def yarn_add_bootstrap
-  `yarn add jquery bootstrap popper.js stimulus tablesort`
+  `yarn add jquery bootstrap popper.js tablesort`
 end
 
 #---------------------
@@ -177,7 +177,6 @@ create_admin_routes
 setup_assets_rb
 copy_session_files
 copy_vendor_files
-copy_stimulus_files
 copy_rake_files
 override_files
 setup_locale_and_timezone
@@ -197,6 +196,8 @@ after_bundle do
   copy_gem_setting_files
   setup_environment_js_for_bootstrap_in_webpack
   yarn_add_bootstrap
+  `rails webpacker:install:stimulus`
+  copy_stimulus_files
   `bin/rails action_text:install`
   rake 'db:rebuild'
 end

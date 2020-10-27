@@ -4,9 +4,10 @@ module Rails
     class DashboardGenerator < Rails::Generators::NamedBase
       source_root File.expand_path('templates', __dir__)
       include ResourceHelpers
-      check_class_collision suffix: "Controller"
+      check_class_collision suffix: "Controller" # 這行可能造成 UsersController is already used 的阻礙，遇到時可暫時註解掉
       class_option :namespace, type: :string, default: 'admin'
       class_option :skip_creating_model, type: :boolean, default: false
+      class_option :skip_creating_controller, type: :boolean, default: false
       class_option :orm, banner: "NAME", type: :string, required: true, desc: "ORM to generate the controller for"
       # argument :attributes, type: :array, default: [], banner: "field[:type][:index][:uniq] field[:type][:index][:uniq]"
       # hook_for :scaffold_controller, as: :controller
@@ -23,7 +24,9 @@ module Rails
       end
 
       def create_controller_file
-        template 'controller.rb', "app/controllers/#{options[:namespace]}/#{plural_name}_controller.rb"
+        unless options[:skip_creating_controller]
+          template 'controller.rb', "app/controllers/#{options[:namespace]}/#{plural_name}_controller.rb"
+        end
       end
 
       def create_policy_file

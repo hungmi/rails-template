@@ -1,7 +1,7 @@
 <%%= search_form_for [:<%= options[:namespace] %>, @q] do |f| %>
 	<div class="form-row">
     <div class="form-group col-12">
-      <%%= f.label @nav_search_symbol, I18n.t("text.filter.#{@nav_search_symbol.to_s}") %>
+      <%%= f.label @nav_search_symbol, I18n.t("text.filters.#{@nav_search_symbol.to_s}") %>
       <%%= f.search_field @nav_search_symbol, class: "form-control" %>
     </div>
 

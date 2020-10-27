@@ -1,0 +1,35 @@
+<div class="form-group <%= form.object.errors[attr_name].present? ? 'has-danger' : '' %>" data-controller="storage-previewable">
+  <%= form.label attr_name %>
+  <% if form.object.send(attr_name).attached? %>
+    <br>
+    <% form.object.send(attr_name).each do |image| %>
+      <div class="image-with-checkbox-on-right-top">
+        <div><%= image_tag image, width: '200px' %></div>
+        <label>
+          <%= check_box_tag "product[remove_#{attr_name}_ids][]", image.id, false, { class: "" } %> 刪除
+        </label>
+      </div>
+    <% end %>
+  <% end %>
+  <div data-target="storage-previewable.previewer"></div>
+  <%= form.file_field attr_name, accept: "image/jpg, image/jpeg, image/png", class: "form-control-file #{form.object.errors[attr_name].present? ? 'is-invalid' : ''}", data: { target: "storage-previewable.fileInput", action: "change->storage-previewable#showPreview" }, multiple: true %>
+  <% if form.object.errors[attr_name].present? %>
+    <div class="invalid-feedback d-block">
+      <%= form.object.errors[attr_name].join(", ") %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  div.image-with-checkbox-on-right-top {
+    display: inline-block;
+    position: relative;
+  }
+  div.image-with-checkbox-on-right-top label {
+    text-shadow: 1px 1px 1px #666;
+    color: white;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+</style>

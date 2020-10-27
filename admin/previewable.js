@@ -1,9 +1,10 @@
 // 參考用法
-// <%= vi.file_field :cover, class: "form-control previewable #{person.errors[:video_infos].present? ? 'is-invalid' : ''}", data: { previewer: "newVideoCoverPreview" } %>
+// <div id="newVideoCoverPreview"></div>
+// <%= f.file_field :cover, class: "form-control previewable", data: { previewer: "newVideoCoverPreview" } %>
 
-var imagePreviewContainerWrapperClass = "col-md-3 col-4"
+var imagePreviewContainerWrapperClass = ""
 var imagePreviewContainer = `
-	<img class="img-fluid" src="">
+	<img src="" style="max-width: 100%; width: 200px;">
 	<small class="img-file-title"></small>`
 
 var videoPreviewContainerWrapperClass = "card"
@@ -13,15 +14,15 @@ var videoPreviewContainer = `
 		<h5 class="card-title"></h5>
 	</div>`
 
-$(document).on("change", "input[type='file'].previewable", function(e) {
+$(document).on("change", "input[type='file'].previewable", function (e) {
 	if (this.files !== undefined) {
 		let previewerID = e.target.getAttribute("data-previewer")
 		let previewer = document.getElementById(previewerID)
 		previewer.innerHTML = ''
-		for (i = 0; i < this.files.length; i++) {
+		for (let i = 0; i < this.files.length; i++) {
 			var appended = document.createElement('div')
-			console.log(this.files[i])
-			
+			// console.log(this.files[i])
+
 			if (this.files[i].type.includes("video")) {
 				appended.className += videoPreviewContainerWrapperClass
 				appended.innerHTML = videoPreviewContainer
@@ -32,44 +33,47 @@ $(document).on("change", "input[type='file'].previewable", function(e) {
 				appended.className += imagePreviewContainerWrapperClass
 				appended.innerHTML = imagePreviewContainer
 			}
-			
+
 
 			previewer.appendChild(appended)
 			let targetMedia = previewer.querySelectorAll("video, img")[i]
 			if (targetMedia !== undefined) {
-				previewFile(targetMedia, this.files[i], e.target)	
+				previewFile(targetMedia, this.files[i], e.target)
 				targetMedia.parentNode.querySelector(".img-file-title").innerHTML = this.files[i].name
 			}
+		}
+		if (e.target.parentNode.querySelector(".js-old-photo")) {
+			e.target.parentNode.querySelector(".js-old-photo").style.opacity = 0.3
 		}
 	}
 })
 
-function previewFile(previewer, file, fileInput){
+function previewFile(previewer, file, fileInput) {
 	// var file    = file_input.files[0]; //sames as here
-	var reader  = new FileReader();
+	var reader = new FileReader();
 
 	reader.onloadend = function () {
-	  previewer.src = reader.result;
-	  let expectWidth = fileInput.getAttribute("data-expectWidth")
-	  let expectHeight = fileInput.getAttribute("data-expectHeight")
-	  let expectImage = fileInput.getAttribute("data-expectImage")
-	  let expectVideo = fileInput.getAttribute("data-expectVideo")
-	  if (expectVideo == "false" && file.type.includes("video")) {
-	  	console.log("not validating video")
-	  } else if (expectImage == "false" && file.type.includes("image")) {
-	  	console.log("not validating image")
-	  } else {
-		  if (expectWidth !== null || expectHeight !== null) {
+		previewer.src = reader.result;
+		let expectWidth = fileInput.getAttribute("data-expectWidth")
+		let expectHeight = fileInput.getAttribute("data-expectHeight")
+		let expectImage = fileInput.getAttribute("data-expectImage")
+		let expectVideo = fileInput.getAttribute("data-expectVideo")
+		if (expectVideo == "false" && file.type.includes("video")) {
+			// console.log("not validating video")
+		} else if (expectImage == "false" && file.type.includes("image")) {
+			// console.log("not validating image")
+		} else {
+			if (expectWidth !== null || expectHeight !== null) {
 				fileDimensionValidator(reader.result, file, previewer, fileInput, expectWidth, expectHeight)
 			}
 		}
-		console.log(reader)
+		// console.log(reader)
 	}
 
 	if (file) {
-	  reader.readAsDataURL(file); //reads the data as a URL
+		reader.readAsDataURL(file); //reads the data as a URL
 	} else {
-	  // previewer.src = "";
+		// previewer.src = "";
 	}
 }
 
@@ -89,12 +93,12 @@ function fileDimensionValidator(result, file, previewer, fileInput, expectWidth,
       	expectRatio = parseFloat(expectWidth) / parseFloat(expectHeight)
       	stretchedWidth = height * expectRatio
       	if (stretchedWidth >= width && stretchedWidth <= width * 1.01) {
-      		console.log("<= 1.01")
+					// console.log("<= 1.01")
       		valid = valid && true
       	} else if (stretchedWidth <= width && stretchedWidth >= width * 0.99) {
       		valid = valid && true
       	} else {
-      		console.log("invalid!")
+					// console.log("invalid!")
       		valid = valid && false
       	}
       } else if (expectWidth !== null) {
@@ -110,28 +114,28 @@ function fileDimensionValidator(result, file, previewer, fileInput, expectWidth,
 				fileInput.value = ""
 				fileInput.parentNode.querySelector("label.custom-file-label").innerHTML = ""
 			}
-    }
+		}
 	} else if (file.type.includes("image")) {
 		var tempLoader = document.createElement("img");
 		tempLoader.src = result
-		tempLoader.onload = function() {
-      width = tempLoader.width
-      height = tempLoader.height
-      if (expectWidth !== null && expectHeight !== null) {
-      	expectRatio = parseFloat(expectWidth) / parseFloat(expectHeight)
-      	stretchedWidth = height * expectRatio
-      	if (stretchedWidth >= width && stretchedWidth <= width * 1.01) {
-      		valid = valid && true
-      	} else if (stretchedWidth <= width && stretchedWidth >= width * 0.99) {
-      		valid = valid && true
-      	} else {
-      		valid = valid && false
-      	}
-      } else if (expectWidth !== null) {
-      	valid = valid && (width >= parseInt(expectWidth))
-      } else if (expectHeight !== null) {
-      	valid = valid && (height >= parseInt(expectHeight))
-      }
+		tempLoader.onload = function () {
+			width = tempLoader.width
+			height = tempLoader.height
+			if (expectWidth !== null && expectHeight !== null) {
+				expectRatio = parseFloat(expectWidth) / parseFloat(expectHeight)
+				stretchedWidth = height * expectRatio
+				if (stretchedWidth >= width && stretchedWidth <= width * 1.01) {
+					valid = valid && true
+				} else if (stretchedWidth <= width && stretchedWidth >= width * 0.99) {
+					valid = valid && true
+				} else {
+					valid = valid && false
+				}
+			} else if (expectWidth !== null) {
+				valid = valid && (width >= parseInt(expectWidth))
+			} else if (expectHeight !== null) {
+				valid = valid && (height >= parseInt(expectHeight))
+			}
 			// window.aaa = fileInput
 			if (valid) {
 			} else {
@@ -140,6 +144,6 @@ function fileDimensionValidator(result, file, previewer, fileInput, expectWidth,
 				fileInput.value = ""
 				fileInput.parentNode.querySelector("label.custom-file-label").innerHTML = ""
 			}
-    }
+		}
 	}
 }
