@@ -1,13 +1,13 @@
-<div class="form-group <%= form.object.errors[attr_name].present? ? 'has-danger' : '' %>" data-controller="storage-previewable">
+<div class="form-group mb-5 <%= form.object.errors[attr_name].present? ? 'has-danger' : '' %>" data-controller="storage-previewable">
   <%= form.label attr_name %>
-  <% if form.object.send(attr_name).attached? %>
-    <div data-target="storage-previewable.oldImage"><%= image_tag form.object.send(attr_name), width: '200px' %></div>
-  <% end %>
-  <div data-target="storage-previewable.previewer"></div>
   <%= form.file_field attr_name, accept: "image/jpg, image/jpeg, image/png", class: "form-control-file #{form.object.errors[attr_name].present? ? 'is-invalid' : ''}", data: { target: "storage-previewable.fileInput", action: "change->storage-previewable#showPreview" } %>
   <% if form.object.errors[attr_name].present? %>
     <div class="invalid-feedback d-block">
       <%= form.object.errors[attr_name].join(", ") %>
     </div>
   <% end %>
+  <div data-target="storage-previewable.previewer"></div>
+  <% if form.object.send(attr_name).attached? %>
+    <div data-target="storage-previewable.oldImage"><%= image_tag form.object.send(attr_name), width: '200px', style: 'max-width: 100%;' %></div>
+  <% end %>  
 </div>

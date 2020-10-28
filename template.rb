@@ -104,7 +104,7 @@ def add_gems
   # gem 'bullet', group: [:development]
   gem 'awesome_rails_console', group: [:development]
   gem 'pundit'
-  gem 'sidekiq'
+  gem 'delayed_job_active_record'
   gem "browser"
   gem 'ransack', github: 'activerecord-hackery/ransack'
   gem "aws-sdk-s3", require: false
@@ -126,9 +126,15 @@ def setup_locale_and_timezone
   copy_file "zh-TW.yml", "config/locales/zh-TW.yml"
 end
 
-def setup_es6_and_s3_production
-  gsub_file 'config/environments/production.rb', 'config.assets.js_compressor = :uglifier', 'config.assets.js_compressor = Uglifier.new(harmony: true)'
-  gsub_file 'config/environments/production.rb', 'config.active_storage.service = :local', 'config.active_storage.service = :amazon'
+def setup_gcs_on_production
+  gsub_file 'config/environments/production.rb', 'config.active_storage.service = :local', 'config.active_storage.service = :google'
+end
+
+def setup_delayed_job_on_production
+  inject_into_file "config/environments/production.rb", before: /^end/ do <<-RUBY.strip_heredoc
+      config.active_job.queue_adapter = :delayed_job
+    RUBY
+  end
 end
 
 def setup_environment_rb
@@ -180,7 +186,8 @@ copy_vendor_files
 copy_rake_files
 override_files
 setup_locale_and_timezone
-setup_es6_and_s3_production
+setup_gcs_on_production
+setup_delayed_job_on_production
 setup_environment_rb
 copy_dashbaord_generator
 
@@ -199,6 +206,7 @@ after_bundle do
   `rails webpacker:install:stimulus`
   copy_stimulus_files
   `bin/rails action_text:install`
+  `rails g delayed_job:active_record`
   rake 'db:rebuild'
 end
 

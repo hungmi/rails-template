@@ -10,7 +10,7 @@ zh-TW:
     destroy: 刪除
     back: 返回
     hint: 提示
-    attr_no_value: 尚未填寫
+    attr_no_value: 無
     confirm_destroy: 確認刪除？
     search_result: 搜尋結果
     filter: 篩選器
@@ -61,6 +61,13 @@ zh-TW:
         restrict_dependent_destroy:
           has_one: 由於 %{record} 需要此記錄，所以無法移除記錄
           has_many: 由於 %{record} 需要此記錄，所以無法移除記錄
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: 密碼兩次輸入須一致
+            password:
+              blank: 請填寫密碼
   date:
     abbr_day_names:
     - 周日
