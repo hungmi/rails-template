@@ -1,0 +1,39 @@
+<!-- 信箱確認 -->
+<tr>
+    <td align="center" style="padding: 17px 0px 17px 0px;">
+        <table border="0" cellpadding="0" cellspacing="0" width="295">
+            <tr>
+                <!-- 信件標題 -->
+                <td align="center" width="100%" style="padding: 65px 0px 39px 0px; font-size: 30px; font-weight: 600; color: #009C75; line-height: 38px;">
+                    信箱確認
+                </td>
+            </tr>
+            <tr>
+                <!-- 信件抬頭 -->
+                <td align="center" width="100%" style="padding: 0px 0px 40px 0px">
+                    親愛的顧客您好：
+                </td>
+            </tr>
+            <tr>
+                <!-- 信件內文 -->
+                <td align="left" width="100%" style="padding: 0px 0px 36px 0px; font-size: 15px;">
+                    感謝您註冊 Wassup 挖砂貓砂 的會員，請點擊下方的連結來啟用帳號。啟用完成後，即可以此帳號登入會員。
+                </td>
+            <tr>
+            </tr>
+                <!-- 信件連結 -->
+                <td align="center" width="100%" height="47">
+                    <a href="<%= registrations_confirmation_url(id: @user.id, token: @user.confirmation_token) %>" style="border-radius: 7.5px; color: #ffffff; background-color: #0D171C; display: block; width: 100%; height: 100%; line-height: 47px; text-decoration: none; font-weight: 600;">
+                        啟用帳號
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <!-- 信件提示文字 -->
+                <td align="left" width="100%" style="padding: 49px 0px 69px 0px; font-size: 15px; color: #b7babb;">
+                    如果您需要其他協助，或者您沒有要求此變更，請儘速聯繫我們。
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>

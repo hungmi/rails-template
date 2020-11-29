@@ -1,0 +1,27 @@
+<!-- 改密碼的頁面 -->
+
+<section class="passwords-edit__edit">
+    <h2 class="g-title-h2 edit__title">設定新密碼</h2>
+
+    <%= form_with model: @user, url: password_path(id: @user.id), local: true, class: "edit__form #{'has-error' if flash[:error].present?}" do |f| %>
+        <ul class="g-form-error">
+            <li>密碼兩次輸入須一致</li>
+        </ul>
+
+        <div class="g-input-unit g-input-unit--pwd">
+            <%= f.password_field :password, class: "g-input js-input-pwd", placeholder: "密碼", required: true %>
+            <%= f.label :password, "輸入新密碼", class: "g-input-label" %>
+            <svg class="g-input-show-pwd js-input-show-pwd current" xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11"><g transform="translate(0 -2.5)"><path d="M16,8S13,2.5,8,2.5,0,8,0,8s3,5.5,8,5.5S16,8,16,8ZM1.173,8a13.134,13.134,0,0,0,1.66,2.043A7.451,7.451,0,0,0,8,12.5a7.457,7.457,0,0,0,5.168-2.457A13.134,13.134,0,0,0,14.828,8a13.133,13.133,0,0,0-1.66-2.043A7.459,7.459,0,0,0,8,3.5,7.457,7.457,0,0,0,2.832,5.957,13.133,13.133,0,0,0,1.172,8Z" fill-rule="evenodd"/><path d="M8,5.5A2.5,2.5,0,1,0,10.5,8,2.5,2.5,0,0,0,8,5.5ZM4.5,8A3.5,3.5,0,1,1,8,11.5,3.5,3.5,0,0,1,4.5,8Z" fill-rule="evenodd"/></g></svg>
+            <svg class="g-input-hide-pwd js-input-hide-pwd" xmlns="http://www.w3.org/2000/svg" width="16" height="12.708" viewBox="0 0 16 12.708"><g transform="translate(0 -1.646)"><path d="M13.359,11.238A13.669,13.669,0,0,0,16,8S13,2.5,8,2.5a7.028,7.028,0,0,0-2.79.588l.77.771A5.944,5.944,0,0,1,8,3.5a7.457,7.457,0,0,1,5.168,2.457A13.134,13.134,0,0,1,14.828,8c-.058.087-.122.183-.195.288a13.187,13.187,0,0,1-1.465,1.755c-.165.165-.337.328-.517.486Z"/><path d="M11.3,9.176A3.5,3.5,0,0,0,6.823,4.7l.823.823a2.5,2.5,0,0,1,2.829,2.829l.822.822Zm-2.943,1.3.822.822A3.5,3.5,0,0,1,4.7,6.823l.823.823a2.5,2.5,0,0,0,2.829,2.829Z"/><path d="M3.35,5.47q-.27.24-.518.487A13.134,13.134,0,0,0,1.172,8l.2.288a13.187,13.187,0,0,0,1.465,1.755A7.459,7.459,0,0,0,8,12.5a5.926,5.926,0,0,0,2.02-.36l.77.772A7.029,7.029,0,0,1,8,13.5C3,13.5,0,8,0,8A13.616,13.616,0,0,1,2.641,4.762l.708.709Z"/><path d="M13.646,14.354l-12-12,.708-.708,12,12Z" fill-rule="evenodd"/></g></svg>
+        </div>
+        <div class="g-input-unit g-input-unit--pwd">
+            <%= f.password_field :password_confirmation, class: "g-input js-input-pwd", placeholder: "密碼確認", required: true %>
+            <%= f.label :password_confirmation, "再輸入一次新密碼", class: "g-input-label" %>
+            <svg class="g-input-show-pwd js-input-show-pwd current" xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11"><g transform="translate(0 -2.5)"><path d="M16,8S13,2.5,8,2.5,0,8,0,8s3,5.5,8,5.5S16,8,16,8ZM1.173,8a13.134,13.134,0,0,0,1.66,2.043A7.451,7.451,0,0,0,8,12.5a7.457,7.457,0,0,0,5.168-2.457A13.134,13.134,0,0,0,14.828,8a13.133,13.133,0,0,0-1.66-2.043A7.459,7.459,0,0,0,8,3.5,7.457,7.457,0,0,0,2.832,5.957,13.133,13.133,0,0,0,1.172,8Z" fill-rule="evenodd"/><path d="M8,5.5A2.5,2.5,0,1,0,10.5,8,2.5,2.5,0,0,0,8,5.5ZM4.5,8A3.5,3.5,0,1,1,8,11.5,3.5,3.5,0,0,1,4.5,8Z" fill-rule="evenodd"/></g></svg>
+            <svg class="g-input-hide-pwd js-input-hide-pwd" xmlns="http://www.w3.org/2000/svg" width="16" height="12.708" viewBox="0 0 16 12.708"><g transform="translate(0 -1.646)"><path d="M13.359,11.238A13.669,13.669,0,0,0,16,8S13,2.5,8,2.5a7.028,7.028,0,0,0-2.79.588l.77.771A5.944,5.944,0,0,1,8,3.5a7.457,7.457,0,0,1,5.168,2.457A13.134,13.134,0,0,1,14.828,8c-.058.087-.122.183-.195.288a13.187,13.187,0,0,1-1.465,1.755c-.165.165-.337.328-.517.486Z"/><path d="M11.3,9.176A3.5,3.5,0,0,0,6.823,4.7l.823.823a2.5,2.5,0,0,1,2.829,2.829l.822.822Zm-2.943,1.3.822.822A3.5,3.5,0,0,1,4.7,6.823l.823.823a2.5,2.5,0,0,0,2.829,2.829Z"/><path d="M3.35,5.47q-.27.24-.518.487A13.134,13.134,0,0,0,1.172,8l.2.288a13.187,13.187,0,0,0,1.465,1.755A7.459,7.459,0,0,0,8,12.5a5.926,5.926,0,0,0,2.02-.36l.77.772A7.029,7.029,0,0,1,8,13.5C3,13.5,0,8,0,8A13.616,13.616,0,0,1,2.641,4.762l.708.709Z"/><path d="M13.646,14.354l-12-12,.708-.708,12,12Z" fill-rule="evenodd"/></g></svg>
+        </div>
+
+        <!-- <button class="g-normal-btn form__submit" type="submit">確認</button> -->
+        <%= f.submit "確認", class: "g-normal-btn form__submit" %>
+    <% end %>
+</section>

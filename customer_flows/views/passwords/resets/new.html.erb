@@ -1,0 +1,11 @@
+<!-- 設定新密碼頁面 -->
+
+<section class="resets-new__forget">
+    <h2 class="g-title-h2 forget__title">設定新密碼</h2>
+    <% if user_signed_in? && current_user.email.present? %>
+        <%= render "has_email" %>
+    <% else %>
+        <%= render "no_email" %>
+    <% end %>
+</section>
+<img class="resets-new__bg" src="<%= asset_pack_path 'media/images/password-new/password-new_bg@2x.png' %>" alt="forget passwords bg">

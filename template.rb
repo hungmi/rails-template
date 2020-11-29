@@ -102,9 +102,12 @@ end
 
 def add_gems
   # gem 'bullet', group: [:development]
-  gem 'awesome_rails_console', group: [:development]
+  gem 'amazing_print', group: [:development]
+  gem 'pry'
+  gem 'pry-rails', group: [:development]
   gem 'pundit'
   gem 'delayed_job_active_record'
+  gem 'daemons'
   gem "browser"
   gem 'ransack', github: 'activerecord-hackery/ransack'
   gem "aws-sdk-s3", require: false

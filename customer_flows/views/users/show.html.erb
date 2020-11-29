@@ -1,0 +1,58 @@
+<% if current_user.orders.present? || current_user.subscriptions.present? %>
+	<h1 class="g-title-h1 users-show__title">會員中心</h1>
+    <% if current_user.the_subscription.present? %>
+        <%= render "subscription_section" %>
+    <% elsif Rails.env.development? %>
+    	<%= "空訂閱單：#{current_user.subscriptions.placed.size}" %>
+    <% end %>
+
+    <%# 訂單列表 vue 錨點 %>
+    <section class="users-show__user-orders" id="vue-user-orders"></section>
+<% else %>
+    <h1 class="g-title-h1 users-show__title">哈摟</h1>
+    <p class="users-show__empty-msg">你的第一個訂單會展示在這</p>
+<% end %>
+
+<%# 我的資訊區 %>
+<section class="users-show__user-info">
+    <h2 class="g-title-h2 user-info__title">我的資訊</h2>
+    <div class="user-info__info-wrapper">
+        <%# FIXME 每次編輯養貓數量都要填寫 email 有點惱人 %>
+        <div class="user-info__cat js-user-info__cat">
+            <%= render partial: 'users/cats_count' %>
+        </div>
+        <div class="user-info__user js-user-info__user">
+            <%= render partial: 'users/personal_info' %>
+        </div>
+        <div class="user-info__shipping js-user-info__shipping">
+            <%= render partial: 'users/shipping_info' %>
+        </div>
+    </div>
+</section>
+
+<div class="g-modal--fill users-show__edit-user js-cats-count-modal">
+    <div class="g-modal-close js-close-cats-count-modal">
+        <img src="<%= asset_pack_path 'media/images/cross.svg' %>" alt="icon cross">
+    </div>
+    <div class="g-modal-content-wrapper--fill js-cats_count_form">
+        <%= render partial: 'users/cats_count_form', locals: { user: current_user } %>
+    </div>
+</div>
+
+<div class="g-modal--fill users-show__edit-user js-user-info-modal">
+    <div class="g-modal-close js-close-user-info-modal">
+        <img src="<%= asset_pack_path 'media/images/cross.svg' %>" alt="icon cross">
+    </div>
+    <div class="g-modal-content-wrapper--fill js-personal_info_form">
+        <%= render partial: 'users/personal_info_form', locals: { user: current_user } %>
+    </div>
+</div>
+
+<div class="g-modal--fill users-show__edit-shipping js-user-shipping-modal">
+    <div class="g-modal-close js-close-user-shipping-modal">
+        <img src="<%= asset_pack_path 'media/images/cross.svg' %>" alt="icon cross">
+    </div>
+    <div class="g-modal-content-wrapper--fill js-shipping_info_form">
+        <%= render partial: 'users/shipping_info_form', locals: { user: current_user, shipping_info: ShippingInfo.where(user_id: current_user.id).first_or_initialize } %>
+    </div>
+</div>

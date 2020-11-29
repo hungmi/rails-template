@@ -6,7 +6,7 @@
 # Example:
 #
 env :PATH, ENV['PATH'] #要用bundle時必須要加
-set :output, "/home/deploy/railsapp/#{Rails.application.class.parent_name.underscore}/shared/log/cron_log.log"
+set :output, "/home/deploy/#{Rails.application.class.parent_name.underscore}/shared/log/cron_log.log"
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
