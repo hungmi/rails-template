@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
 
 	def redirect_to_sign_in
 		if user_signed_in?
-      redirect_back(fallback_location: profile_users_path)
+      redirect_back(fallback_location: root_path)
     else
       redirect_to sign_in_path
     end

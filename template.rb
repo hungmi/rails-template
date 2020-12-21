@@ -23,6 +23,8 @@ def create_admin_files
   copy_file "admin/admin.sass", "app/assets/stylesheets/admin.sass"
   copy_file "admin/admin.js", "app/javascript/packs/admin.js"
   copy_file "admin/sortable.js", "app/javascript/packs/sortable.js"
+  copy_file "admin/bootstrap.min.css", "app/javascript/packs/stylesheets/bootstrap.min.css"
+  copy_file "admin/tablesort.min.css", "app/javascript/packs/stylesheets/tablesort.min.css"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
@@ -80,17 +82,8 @@ end
 
 ## 以上生成管理員、登入頁、登入授權
 
-def copy_vendor_files
-  default_vendor_folder_path = "vendor/assets"
-  copy_file "vendor/js/jquery.timeago.js", "#{default_vendor_folder_path}/js/jquery.timeago.js"
-  copy_file "vendor/js/tablesort.min.js", "#{default_vendor_folder_path}/js/tablesort.min.js"
-  copy_file "vendor/js/tablesort.number.min.js", "#{default_vendor_folder_path}/js/tablesort.number.min.js"
-  copy_file "vendor/css/bootstrap.min.css", "#{default_vendor_folder_path}/css/bootstrap.min.css"
-  copy_file "vendor/css/tablesort.min.css", "#{default_vendor_folder_path}/css/tablesort.min.css"
-end
-
 def copy_stimulus_files
-  copy_file "admin/stimulus/storage_previewable_controller.js", "app/javascript/packs/controllers/storage_previewable_controller.js"
+  copy_file "stimulus/storage_previewable_controller.js", "app/javascript/packs/controllers/storage_previewable_controller.js"
 end
 
 def override_files
@@ -185,7 +178,6 @@ create_admin_files
 create_admin_routes
 setup_assets_rb
 copy_session_files
-copy_vendor_files
 copy_rake_files
 override_files
 setup_locale_and_timezone
@@ -210,6 +202,5 @@ after_bundle do
   copy_stimulus_files
   `bin/rails action_text:install`
   `rails g delayed_job:active_record`
-  rake 'db:rebuild'
 end
 

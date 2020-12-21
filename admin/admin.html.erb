@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%%= meta_title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,12 +9,13 @@
     <%%= javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload' %>
     <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  </head>
-  <body class='admin <%%= "#{controller_name}-controller" %> <%%= "#{action_name}-action" %>'>
+</head>
+<body class='admin <%%= "#{controller_name}-controller" %> <%%= "#{action_name}-action" %>'>
     <%%= render "admin/common/nav_top" if user_signed_in? %>
     <div class="container">
-      <h1 data-controller="hello" data-target="hello.output"></h1>
-      <%%= yield %>
+        <%%= notice_message(dismissible: true, fixed: true) %>
+        <h1 data-controller="hello" data-target="hello.output"></h1>
+        <%%= yield %>
     </div>
-  </body>
+</body>
 </html>

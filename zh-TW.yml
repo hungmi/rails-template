@@ -8,6 +8,7 @@ zh-TW:
     search: 搜尋
     search_placeholder: 輸入關鍵字
     destroy: 刪除
+    export: 匯出
     back: 返回
     hint: 提示
     attr_no_value: 無

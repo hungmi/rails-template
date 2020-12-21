@@ -1,11 +1,11 @@
-<%%= render partial: "admin/common/resources_header", locals: { resource_name: <%= class_name.constantize %>.model_name.human } %>
+<%%= render partial: "admin/common/resources_header", locals: { resource_name: <%= class_name.constantize %>.model_name.human, export_path: 'javascript:void(0)' } %>
 
 <div class="row">
 	<%% if not_desktop? %>
-  	<%%= render @<%= plural_table_name %> %>
-  <%% else %>
-  	<%%= render partial: "<%= plural_table_name %>_table", locals: { <%= plural_table_name %>: @<%= plural_table_name %> } %>
-  <%% end %>
+  		<%%= render @<%= plural_table_name %> %>
+  	<%% else %>
+  		<%%= render partial: "<%= plural_table_name %>_table", locals: { <%= plural_table_name %>: @<%= plural_table_name %> } %>
+  	<%% end %>
 </div>
 
 <%%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
