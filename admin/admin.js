@@ -4,16 +4,25 @@
 // that code so it'll be compiled.
 import 'bootstrap/dist/js/bootstrap'
 
-require("@rails/ujs").start()
-require("@rails/activestorage").start()
-require("channels")
-require("trix")
-require("@rails/actiontext")
-var tablesort = require('tablesort')
-import "../packs/sortable.js"
+import Rails from "@rails/ujs"
+import Turbolinks from "turbolinks"
+import * as ActiveStorage from "@rails/activestorage"
+import "channels"
+
+Rails.start()
+Turbolinks.start()
+ActiveStorage.start()
+
 import "controllers"
 
-window.addEventListener("load", () => {
+require("trix")
+require("@rails/actiontext")
+
+var tablesort = require('tablesort')
+import "../packs/sortable.js"
+import '../stylesheets/admin.sass'
+
+document.addEventListener("turbolinks:load", () => {
 	if ( document.body.classList.contains('admin-users-index') ) {
 		tablesort(document.querySelector("#js-users-tablesort"), { descending: true })
 	}
