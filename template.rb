@@ -20,7 +20,7 @@ end
 def create_admin_files
   copy_file "admin/admin_controller.rb", "app/controllers/admin_controller.rb"
   copy_file "admin/admin_policy.rb", "app/policies/admin_policy.rb"
-  copy_file "admin/admin.sass", "app/assets/stylesheets/admin.sass"
+  copy_file "admin/admin.sass", "app/javascript/stylesheets/admin.sass"
   copy_file "admin/admin.js", "app/javascript/packs/admin.js"
   copy_file "admin/sortable.js", "app/javascript/packs/sortable.js"
   copy_file "admin/bootstrap.min.css", "app/javascript/packs/stylesheets/bootstrap.min.css"
@@ -69,7 +69,7 @@ def generate_user_dashboard
 end
 
 def copy_session_files
-  copy_file "sessions/sessions.sass", "app/assets/stylesheets/admin/sessions.sass"
+  copy_file "sessions/sessions.sass", "app/javascript/stylesheets/admin/sessions.sass"
   template "sessions/signin.html.erb", "app/views/admin/sessions/new.html.erb"
   template "sessions/session_controller.rb", "app/controllers/admin/sessions_controller.rb"
   template "sessions/session_policy.rb", "app/policies/admin/session_policy.rb"
@@ -90,7 +90,7 @@ def override_files
   copy_file "application_controller.rb", "app/controllers/application_controller.rb", force: true
   copy_file "application_helper.rb", "app/helpers/application_helper.rb", force: true
   remove_file "app/assets/stylesheets/application.css"
-  template "application.scss", "app/assets/stylesheets/application.scss"
+  template "application.scss", "app/javascript/stylesheets/application.scss"
 end
 
 def add_gems
@@ -108,6 +108,7 @@ def add_gems
   gem 'redis', '~> 4.0'
   gem 'pagy'
   gem 'whenever', require: false
+  gem 'image_processing', '~> 1.2'
 end
 
 def copy_gem_setting_files
