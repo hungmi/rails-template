@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body class='admin <%= "admin-#{controller_name}-#{action_name}" %>'>
+<body class='admin <%%= "admin-#{controller_name}-#{action_name}" %>'>
     <%%= render "admin/common/nav_top" if user_signed_in? %>
     <div class="container">
         <%%= notice_message(dismissible: true, fixed: true) %>

@@ -1,13 +1,13 @@
 <p class="forget__notice">在下方輸入註冊時的 Email，並點擊提交。我們會為您發送電子郵件，包含如何設定新密碼的說明。</p>
-<%= form_with url: passwords_resets_path, local: true, class: "forget__forget-form #{'has-error' if flash[:error].present?}" do |f| %>
+<%%= form_with url: passwords_resets_path, local: true, class: "#{'has-error' if flash[:error].present?}" do |f| %>
     <ul class="g-form-error">
-        <li><%= flash[:error] %></li>
+        <li><%%= flash[:error] %></li>
     </ul>
 
     <div class="g-input-unit forget-form__email">
-    	<%= f.email_field :username, required: true, placeholder: "Email", class: "g-input" %>
-        <%= f.label :username, "Email", class: "g-input-label" %>
+    	<%%= f.email_field :username, required: true, placeholder: "Email", class: "g-input" %>
+        <%%= f.label :username, "Email", class: "g-input-label" %>
     </div>
 
     <button class="g-normal-btn forget-form__submit" type="submit">提交</button>
-<% end %>
+<%% end %>

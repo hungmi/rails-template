@@ -1,0 +1,23 @@
+<!-- 改密碼的頁面 -->
+
+<section class="">
+    <h2>設定新密碼</h2>
+
+    <%%= form_with model: @user, url: password_path(id: @user.id), local: true, class: "#{'has-error' if flash[:error].present?}" do |f| %>
+        <ul class="g-form-error">
+            <li>密碼兩次輸入須一致</li>
+        </ul>
+
+        <div class="g-input-unit g-input-unit--pwd">
+            <%%= f.password_field :password, class: "", placeholder: "密碼", required: true %>
+            <%%= f.label :password, "輸入新密碼", class: "" %>
+        </div>
+        <div class="g-input-unit g-input-unit--pwd">
+            <%%= f.password_field :password_confirmation, class: "", placeholder: "密碼確認", required: true %>
+            <%%= f.label :password_confirmation, "再輸入一次新密碼", class: "" %>
+        </div>
+
+        <!-- <button class="g-normal-btn form__submit" type="submit">確認</button> -->
+        <%%= f.submit "確認", class: "" %>
+    <%% end %>
+</section>

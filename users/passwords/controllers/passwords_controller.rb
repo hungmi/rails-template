@@ -1,11 +1,11 @@
-class PasswordsController < ApplicationController
+class PasswordsController < AdminController
   def show
   end
 
   def edit
     @user = User.find_by(id: params[:id], reset_token: params[:token])
     unless @user.present?
-      flash[:not_authorized_error] = "找不到對應的使用者"
+      flash[:warning] = "找不到對應的使用者"
       redirect_to root_path
     end
   end

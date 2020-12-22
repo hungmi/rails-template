@@ -1,0 +1,7 @@
+<!-- 設定新密碼頁面 -->
+<h2>設定新密碼</h2>
+<%% if user_signed_in? && current_user.email.present? %>
+    <%%= render "has_email" %>
+<%% else %>
+    <%%= render "no_email" %>
+<%% end %>

@@ -39,10 +39,12 @@ end
 def create_admin_routes
   route "get 'admin', to: redirect('/admin/users')"
   inject_into_file "config/routes.rb", before: /^end/ do <<-RUBY.strip_heredoc
+      resources :sessions, only: [:new, :create, :destroy]
+      resources :passwords, only: [:show, :edit, :update] # 重置密碼成功頁面, 改密碼的頁面, 密碼更新
+      namespace :passwords do
+        resources :resets, only: [:new, :show, :create] # 申請設定新密碼信件頁面, 設定新密碼信件已寄出頁面, 寄出設定新密碼信件
+      end
       namespace :admin do
-        get 'signin', to: 'sessions#new'
-        post 'signin', to: 'sessions#create'
-        delete 'logout', to: 'sessions#destroy'
       end
     RUBY
   end
@@ -64,15 +66,28 @@ def generate_user_dashboard
   `rails g dashboard users name:string:index role:integer password:string password_confirmation:string --skip-creating-model true`
   # 首先產生不需要密碼及確認密碼的 migration file
   # `rails g migration create_users name:string:index role:integer password:digest -f`
-  template "admin_users/user.rb", "app/models/user.rb", force: true
-  copy_file "admin_users/_form.html.erb", "app/views/admin/users/_form.html.erb", force: true
+  template "users/user.rb", "app/models/user.rb", force: true
+  copy_file "users/_form.html.erb", "app/views/admin/users/_form.html.erb", force: true
 end
 
-def copy_session_files
-  copy_file "sessions/sessions.sass", "app/javascript/stylesheets/admin/sessions.sass"
-  template "sessions/signin.html.erb", "app/views/admin/sessions/new.html.erb"
-  template "sessions/session_controller.rb", "app/controllers/admin/sessions_controller.rb"
-  template "sessions/session_policy.rb", "app/policies/admin/session_policy.rb"
+def copy_sessions_files
+  copy_file "users/sessions/css/sessions.sass", "app/javascript/stylesheets/sessions.sass"
+  copy_file "users/sessions/views/new.html.erb", "app/views/sessions/new.html.erb"
+  copy_file "users/sessions/controllers/sessions_controller.rb", "app/controllers/sessions_controller.rb"
+end
+
+def copy_passwords_files
+  copy_file "users/passwords/controllers/passwords_controller.rb", "app/controllers/passwords_controller.rb"
+  template "users/passwords/views/passwords/edit.html.erb", "app/views/passwords/edit.html.erb"
+  template "users/passwords/views/passwords/show.html.erb", "app/views/passwords/show.html.erb"
+end
+
+def copy_password_resets_files
+  copy_file "users/password_resets/controllers/passwords/resets_controller.rb", "app/controllers/passwords/resets_controller.rb"
+  template "users/password_resets/views/passwords/resets/new.html.erb", "app/views/passwords/resets/new.html.erb"
+  template "users/password_resets/views/passwords/resets/show.html.erb", "app/views/passwords/resets/show.html.erb"
+  template "users/password_resets/views/passwords/resets/_has_email.html.erb", "app/views/passwords/resets/_has_email.html.erb"
+  template "users/password_resets/views/passwords/resets/_no_email.html.erb", "app/views/passwords/resets/_no_email.html.erb"
 end
 
 def copy_rake_files
@@ -178,7 +193,9 @@ add_gems
 create_admin_files
 create_admin_routes
 setup_assets_rb
-copy_session_files
+copy_sessions_files
+copy_passwords_files
+copy_password_resets_files
 copy_rake_files
 override_files
 setup_locale_and_timezone

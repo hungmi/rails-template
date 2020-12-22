@@ -1,0 +1,12 @@
+<p class="forget__notice">我們將發送一封信件到 <%%= current_user.email %></p>
+<%%= form_with url: passwords_resets_path, local: true, class: "#{'has-error' if flash[:error].present?}" do |f| %>
+    <ul class="g-form-error">
+        <li><%%= flash[:error] %></li>
+    </ul>
+
+    <div class="g-input-unit forget-form__email">
+        <%%= f.email_field :username, value: current_user.email, required: true, placeholder: "Email", class: "g-input", hidden: true %>
+    </div>
+    <button class="g-normal-btn forget-form__submit" type="submit">寄出 Email</button>
+    <a href="<%%= profile_users_path %>" class="forget-form__not-you">不是您嗎？</a>
+<%% end %>

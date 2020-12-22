@@ -6,16 +6,16 @@ class SessionsController < ApplicationController
   end
 
   def create
-  	user = User.find_by(email: params[:username]).try(:authenticate, params[:password])
+  	user = User.find_by(email: params[:session][:username]).try(:authenticate, params[:session][:password])
   	if user.present?
       if user.confirmed_at.present?
   		  sign_in_and_redirect_to_back_path(user)
       else
-        flash[:error] = "請先驗證信箱"
-        redirect_to sign_in_path
+        flash[:danger] = "請先驗證信箱"
+        redirect_to new_session_path
       end
   	else
-  		flash.now[:error] = "您輸入的帳號密碼不正確"
+  		flash.now[:danger] = "您輸入的帳號密碼不正確"
   		render :new
   	end
   end
