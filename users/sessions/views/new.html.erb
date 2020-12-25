@@ -1,12 +1,12 @@
 <div class="login-wrapper">
 	<%%= notice_message(dismissible: true, fixed: true) %>
 	<div class="text-center">
-		<%%= form_for :session, url: new_session_path, html: { class: "form-signin" } do |f| %>
+		<%%= form_for :session, url: sessions_path, html: { class: "form-signin" } do |f| %>
 			<img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
 			<h1 class="h3 mb-3 font-weight-normal">Polish Design</h1>
 			<%%= f.hidden_field :back_path, value: params[:back_path] %>
-			<%%= f.label :user_name, "使用者名稱", class: "sr-only" %>
-			<%%= f.text_field :user_name, placeholder: "使用者名稱", class: "form-control", required: true, autofocus: true %>
+			<%%= f.label :username, "使用者名稱", class: "sr-only" %>
+			<%%= f.text_field :username, placeholder: "使用者名稱", class: "form-control", required: true, autofocus: true %>
 			<%%= f.label :password, "密碼", class: "sr-only" %>
 			<%%= f.password_field :password, placeholder: "密碼", class: "form-control" %>
 		  	<div class="clear-fix mb-3"></div>
