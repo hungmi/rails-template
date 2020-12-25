@@ -98,7 +98,7 @@ end
 ## 以上生成管理員、登入頁、登入授權
 
 def copy_stimulus_files
-  copy_file "stimulus/storage_previewable_controller.js", "app/javascript/packs/controllers/storage_previewable_controller.js"
+  copy_file "stimulus/storage_previewable_controller.js", "app/javascript/controllers/storage_previewable_controller.js"
 end
 
 def override_files
