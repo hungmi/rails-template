@@ -58,7 +58,9 @@ export default class extends Controller {
 					targetMedia.parentNode.querySelector(".img-file-title").innerHTML = this.fileInputTarget.files[i].name
 				}
 			}
-			this.oldImageTarget.style.opacity = 0.3 // 單張圖的情況下，上傳即覆蓋，因此將其透明化
+			if (this.hasOldImageTarget) {
+				this.oldImageTarget.style.opacity = 0.3 // 單張圖的情況下，上傳即覆蓋，因此將其透明化
+			}
 		}
   	}
 
