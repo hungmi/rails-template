@@ -21,6 +21,8 @@ require("@rails/actiontext")
 var tablesort = require('tablesort')
 import "../packs/sortable.js"
 import '../stylesheets/admin.sass'
+import 'flatpickr/dist/flatpickr.css'
+import 'flatpickr/dist/themes/dark.css'
 
 document.addEventListener("turbolinks:load", () => {
 	if ( document.body.classList.contains('admin-users-index') ) {

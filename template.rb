@@ -99,6 +99,7 @@ end
 
 def copy_stimulus_files
   copy_file "stimulus/storage_previewable_controller.js", "app/javascript/controllers/storage_previewable_controller.js"
+  copy_file "stimulus/flat_pickr_controller.js", "app/javascript/controllers/flat_pickr_controller.js"
 end
 
 def override_files
@@ -184,7 +185,7 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
 end
 
 def yarn_add_bootstrap
-  `yarn add jquery bootstrap popper.js tablesort`
+  `yarn add jquery bootstrap popper.js tablesort flatpickr`
 end
 
 #---------------------

@@ -1,6 +1,6 @@
-// 搭配 partial _flat_pickr_js 使用
-
 import { Controller } from "stimulus"
+import flatpickr from "flatpickr"
+import "flatpickr/dist/l10n/zh-tw.js"
 
 export default class extends Controller {
 	static targets = [ "" ]
