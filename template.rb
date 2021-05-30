@@ -29,9 +29,11 @@ def create_admin_files
   copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
   template "_resources_header.html.erb", "app/views/admin/common/_resources_header.html.erb"
+  template "_archives_resources_header.html.erb", "app/views/admin/common/_archives_resources_header.html.erb"
   template "_image_field.html.erb", "app/views/admin/common/_image_field.html.erb"
   template "_images_field.html.erb", "app/views/admin/common/_images_field.html.erb"
   copy_file "record_not_found.js.erb", "app/views/admin/common/record_not_found.js.erb"
+  copy_file "archivable.rb", "app/models/concerns/archivable.rb"
 end
 
 def create_admin_routes

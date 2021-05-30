@@ -1,4 +1,8 @@
-<%%= render partial: "admin/common/resources_header", locals: { resource_name: <%= class_name.constantize %>.model_name.human, export_path: 'javascript:void(0)' } %>
+<%% if controller_name == 'archives' %>
+	<%%= render partial: "admin/common/archives_resources_header", locals: { resource_name: <%= class_name.constantize %>.model_name.human, index: admin_<%= plural_table_name %>_path } %>
+<%% else %>
+	<%%= render partial: "admin/common/resources_header", locals: { resource_name: <%= class_name.constantize %>.model_name.human, export: admin_<%= plural_table_name %>_path(q: (params[:q].permit! if params[:q]), format: :csv), archive: admin_<%= plural_table_name %>_archives_path } %>
+<%% end %>
 
 <%%= turbo_frame_tag "admin_<%= plural_table_name %>_table" do %>
 	<%% if @q.present? %>
