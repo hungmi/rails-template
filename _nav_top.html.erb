@@ -23,8 +23,8 @@
               <i class="material-icons" style="position: absolute;">&#xE7FD;</i> <span style="padding-left: 30px;">個人資料</span>
             <%% end %>
             <div class="dropdown-divider"></div>
-            <%%= link_to admin_logout_path, class: "dropdown-item", method: :delete do %>
-              <i class="material-icons" style="position: absolute;">&#xE879;</i> <span style="padding-left: 30px;">登出</span>
+            <%%= link_to session_path(id: current_user.id), class: "dropdown-item", method: :delete do %>
+              <i class="material-icons">&#xE879;</i> <span>登出</span>
             <%% end %>
           </div>
         </li>

@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 		if user_signed_in?
       redirect_back(fallback_location: root_path)
     else
-      redirect_to sign_in_path
+      redirect_to new_session_path
     end
 	end
 end
