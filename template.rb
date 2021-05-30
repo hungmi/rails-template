@@ -72,7 +72,7 @@ end
 
 def copy_sessions_files
   copy_file "users/sessions/css/sessions.sass", "app/javascript/stylesheets/sessions.sass"
-  copy_file "users/sessions/views/new.html.erb", "app/views/sessions/new.html.erb"
+  template "users/sessions/views/new.html.erb", "app/views/sessions/new.html.erb"
   copy_file "users/sessions/controllers/sessions_controller.rb", "app/controllers/sessions_controller.rb"
 end
 
