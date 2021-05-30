@@ -28,8 +28,6 @@ def create_admin_files
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
-  template "_search_modal.html.erb", "app/views/admin/common/_search_modal.html.erb"
-  template "_short_search_input_group.html.erb", "app/views/admin/common/_short_search_input_group.html.erb"
   template "_resources_header.html.erb", "app/views/admin/common/_resources_header.html.erb"
   template "_image_field.html.erb", "app/views/admin/common/_image_field.html.erb"
   template "_images_field.html.erb", "app/views/admin/common/_images_field.html.erb"
