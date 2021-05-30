@@ -1,29 +1,34 @@
 zh-TW:
   text:
-    index: 列表
+    actions: 動作
+    apply: 確認
+    attr_no_value: 無
+    back: 返回
     cancel: 取消
-    show: 檢視
-    edit: 編輯
-    new: 新增
-    search: 搜尋
-    search_placeholder: 輸入關鍵字
+    clear: 清除
+    confirm_destroy: 確認刪除？
     destroy: 刪除
     export: 匯出
-    back: 返回
-    hint: 提示
-    attr_no_value: 無
-    confirm_destroy: 確認刪除？
+    edit: 編輯
+    'false': 否
+    'true': 是
+    show: 檢視
+    search: 搜尋
+    search_placeholder: 輸入關鍵字
     search_result: 搜尋結果
-    filter: 篩選器
-    apply: 應用
-    clear: 清除
+    hint: 提示
+    index: 列表
+    new: 新增
     saving: 儲存中...
+    filter: 篩選器
     filters:
       id_eq: ID 等於
   flash:
     create_success: 建立成功。
     update_success: 更新成功。
     destroy_success: 刪除成功。
+    create_failed: 建立失敗。
+    update_failed: 更新失敗。
   activerecord:
     models:
       customer: 客戶
