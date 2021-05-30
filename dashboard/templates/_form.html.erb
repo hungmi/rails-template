@@ -1,8 +1,8 @@
 <%%= form_with model: [:<%= options[:namespace] %>, <%= model_resource_name %>], class: "mb-5" do |f| %>
   <div class="row">
-    <div class="offset-lg-3 col-lg-6"><% attributes_names.map do |name| %>
-      <div class="form-group <%%= <%= model_resource_name %>.errors[:<%= name %>].present? ? 'has-danger' : '' %>">
-        <%%= f.label :<%= name %> %>
+    <div class="col-md-6"><% attributes_names.map do |name| %>
+      <div class="mb-3">
+        <%%= f.label :<%= name %>, class: 'form-label' %>
         <%%= f.text_field :<%= name %>, class: "form-control #{<%= model_resource_name %>.errors[:<%= name %>].present? ? 'is-invalid' : ''}" %>
         <%% if <%= model_resource_name %>.errors[:<%= name %>].present? %>
     	    <div class="invalid-feedback">
@@ -13,7 +13,7 @@
     <% end %>
 
       <%% if false %>
-      <div class="form-group <%%= <%= model_resource_name %>.errors[:<%= name %>].present? ? 'has-danger' : '' %>">
+      <div class="mb-3">
         <%%= f.rich_text_area :<%= name %>, class: "form-control #{<%= model_resource_name %>.errors[:<%= name %>].present? ? 'is-invalid' : ''}" %>
         <%% if <%= model_resource_name %>.errors[:<%= name %>].present? %>
           <div class="invalid-feedback">
@@ -24,7 +24,7 @@
       <%% end %>
 
       <%% if false %> <!-- 請記得將 kind 取代掉 -->
-      <div class="form-group <%%= <%= model_resource_name %>.errors[:<%= name %>].present? ? 'has-danger' : '' %>">
+      <div class="mb-3">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <%% <%= class_name %>.kinds.keys.map do |name| %>
             <label class="btn <%%= name == <%= model_resource_name %>.kind ? 'btn-primary active' : 'btn-secondary' %> <%%= <%= model_resource_name %>.errors[:kind].present? ? 'btn-danger' : '' %>">

@@ -1,8 +1,8 @@
-<%= form_with model: [:admin, user], local: true, class: "mb-5" do |f| %>
+<%= form_with model: [:admin, user], class: "mb-5" do |f| %>
   <div class="row">
-    <div class="offset-lg-3 col-lg-6">
-      <div class="form-group <%= user.errors[:name].present? ? 'has-danger' : '' %>">
-        <%= f.label :name %>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= f.label :name, class: 'form-label' %>
         <%= f.text_field :name, class: "form-control #{user.errors[:name].present? ? 'is-invalid' : ''}" %>
         <% if user.errors[:name].present? %>
     	    <div class="invalid-feedback">
@@ -11,8 +11,8 @@
         <% end %>
       </div>
     
-      <div class="form-group <%= user.errors[:role].present? ? 'has-danger' : '' %>">
-        <%= f.label :role %>
+      <div class="mb-3">
+        <%= f.label :role, class: 'form-label' %>
         <%= f.select :role, User.roles.map { |k,v| k }, {}, class: "form-control #{user.errors[:role].present? ? 'is-invalid' : ''}" %>
         <% if user.errors[:role].present? %>
     	    <div class="invalid-feedback">
@@ -21,8 +21,8 @@
         <% end %>
       </div>
     
-      <div class="form-group <%= user.errors[:password].present? ? 'has-danger' : '' %>">
-        <%= f.label :password %>
+      <div class="mb-3">
+        <%= f.label :password, class: 'form-label' %>
         <%= f.password_field :password, class: "form-control #{user.errors[:password].present? ? 'is-invalid' : ''}" %>
         <% if user.errors[:password].present? %>
     	    <div class="invalid-feedback">
@@ -31,8 +31,8 @@
         <% end %>
       </div>
     
-      <div class="form-group <%= user.errors[:password_confirmation].present? ? 'has-danger' : '' %>">
-        <%= f.label :password_confirmation %>
+      <div class="mb-3">
+        <%= f.label :password_confirmation, class: 'form-label' %>
         <%= f.password_field :password_confirmation, class: "form-control #{user.errors[:password_confirmation].present? ? 'is-invalid' : ''}" %>
         <% if user.errors[:password_confirmation].present? %>
     	    <div class="invalid-feedback">
