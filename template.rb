@@ -61,7 +61,7 @@ end
 ## 以下生成管理員、登入頁、登入授權
 def generate_user_dashboard
   # 首先產生不需要密碼及確認密碼的 migration file
-  `rails g model users name:string:index role:integer password:digest`
+  `rails g model users name:string:index email:string:index role:integer password:digest`
   # 然後再產生其他的 model, view 等等的，不要覆蓋 migration file 就好
   `rails g dashboard users name:string:index role:integer password:string password_confirmation:string --skip-creating-model true`
   # 首先產生不需要密碼及確認密碼的 migration file
