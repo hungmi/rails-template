@@ -106,6 +106,10 @@ end
 def copy_stimulus_files
   copy_file "stimulus/storage_previewable_controller.js", "app/javascript/controllers/storage_previewable_controller.js"
   copy_file "stimulus/flat_pickr_controller.js", "app/javascript/controllers/flat_pickr_controller.js"
+  copy_file "stimulus/tablesort_controller.js", "app/javascript/controllers/tablesort_controller.js"
+  copy_file "stimulus/nested_form_controller.js", "app/javascript/controllers/nested_form_controller.js"
+  copy_file "stimulus/toast_controller.js", "app/javascript/controllers/toast_controller.js"
+  copy_file "stimulus/tw_city_selector_controller.js", "app/javascript/controllers/tw_city_selector_controller.js"
 end
 
 def override_files
