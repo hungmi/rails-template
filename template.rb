@@ -192,7 +192,7 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
 end
 
 def yarn_add_bootstrap
-  `yarn add jquery bootstrap @popperjs/core tablesort flatpickr`
+  `yarn add tablesort flatpickr`
 end
 
 #---------------------
