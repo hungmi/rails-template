@@ -95,6 +95,10 @@ def copy_rake_files
   copy_file "rake/dev.rake", "lib/tasks/dev.rake"
 end
 
+def copy_seeds
+  copy_file "seeds.rb", "db/seeds.rb"
+end
+
 ## 以上生成管理員、登入頁、登入授權
 
 def copy_stimulus_files
