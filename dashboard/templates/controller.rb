@@ -64,8 +64,6 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
 
     def set_search
       @q = <%= singular_table_name.classify %>.ransack(params[:q])
-      @nav_search_symbol = :id_eq
-      @nav_search_placeholder = nil
     end
 
     # Only allow a trusted parameter "white list" through.
