@@ -114,6 +114,7 @@ def add_gems
   gem 'amazing_print', group: [:development]
   gem 'pry'
   gem 'pry-rails', group: [:development]
+  gem 'bullet', group: [:development]
   gem 'pundit'
   gem 'delayed_job_active_record'
   gem 'daemons'
@@ -125,6 +126,7 @@ def add_gems
   gem 'pagy'
   gem 'whenever', require: false
   gem 'image_processing', '~> 1.2'
+  gem 'mimemagic', '~> 0.3.10' # 因為此gem某些版本已被移除，因此需要指定版本
   gem 'hotwire-rails'
 end
 
@@ -214,7 +216,7 @@ after_bundle do
   generate_user_dashboard
   `rails g model dbbackup name:string`
   setup_dbbackup_rb
-  `rails db:environment:set RAILS_ENV=development`
+  # `rails db:environment:set RAILS_ENV=development`
   copy_gem_setting_files
   # setup_environment_js_for_bootstrap_in_webpack
   yarn_add_bootstrap
@@ -222,5 +224,6 @@ after_bundle do
   `bin/rails hotwire:install`
   `bin/rails action_text:install`
   `rails g delayed_job:active_record`
+  `RAILS_ENV=development rails db:create db:migrate`
 end
 
