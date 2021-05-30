@@ -31,7 +31,8 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
       flash[:success] = I18n.t('flash.create_success')
       redirect_to edit_<%= options[:namespace] %>_<%= singular_table_name %>_path(@<%= singular_table_name %>)
     else
-      render :new
+      flash.now[:danger] = I18n.t('flash.create_failed')
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -41,7 +42,8 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
       flash[:success] = I18n.t('flash.update_success')
       redirect_to <%= options[:namespace] %>_<%= plural_table_name %>_path(anchor: "<%= singular_table_name %>-#{@<%= singular_table_name %>.id}")
     else
-      render :edit
+      flash.now[:danger] = I18n.t('flash.update_failed')
+      render :edit, status: :unprocessable_entity
     end
   end
 

@@ -125,6 +125,7 @@ def add_gems
   gem 'pagy'
   gem 'whenever', require: false
   gem 'image_processing', '~> 1.2'
+  gem 'hotwire-rails'
 end
 
 def copy_gem_setting_files
@@ -217,8 +218,8 @@ after_bundle do
   copy_gem_setting_files
   setup_environment_js_for_bootstrap_in_webpack
   yarn_add_bootstrap
-  `rails webpacker:install:stimulus`
   copy_stimulus_files
+  `bin/rails hotwire:install`
   `bin/rails action_text:install`
   `rails g delayed_job:active_record`
 end

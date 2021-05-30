@@ -1,4 +1,4 @@
-<%%= form_with model: [:<%= options[:namespace] %>, <%= model_resource_name %>], local: true, class: "mb-5" do |f| %>
+<%%= form_with model: [:<%= options[:namespace] %>, <%= model_resource_name %>], class: "mb-5" do |f| %>
   <div class="row">
     <div class="offset-lg-3 col-lg-6"><% attributes_names.map do |name| %>
       <div class="form-group <%%= <%= model_resource_name %>.errors[:<%= name %>].present? ? 'has-danger' : '' %>">

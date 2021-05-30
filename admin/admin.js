@@ -5,12 +5,11 @@
 import 'bootstrap/dist/js/bootstrap'
 
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
+import "@hotwired/turbo-rails"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 Rails.start()
-Turbolinks.start()
 ActiveStorage.start()
 
 import "controllers"
@@ -24,7 +23,9 @@ import '../stylesheets/admin.sass'
 import 'flatpickr/dist/flatpickr.css'
 import 'flatpickr/dist/themes/dark.css'
 
-document.addEventListener("turbolinks:load", () => {
+document.addEventListener("turbo:load", () => {
+	console.log('turboing')
+	
 	if ( document.body.classList.contains('admin-users-index') ) {
 		tablesort(document.querySelector("#js-users-tablesort"), { descending: true })
 	}
