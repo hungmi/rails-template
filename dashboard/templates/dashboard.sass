@@ -1,4 +1,11 @@
 body.admin
+	.input-group.is-invalid
+		.input-group-text, .form-control
+			border-color: #ff0039 !important
+	.form-control:disabled, .form-control[readonly]
+		background-color: #e5e7e9
+	.flatpickr-input.form-control[readonly]
+		background-color: #fff
 	table.table
 		thead > tr > th
 			border-top: 0px
@@ -19,6 +26,18 @@ body.admin
 				padding: 10px
 				.material-icons
 					font-size: 20px
+	.btn-with-icon
+		position: relative
+		font-size: 14px
+		padding-left: 25px
+		padding-right: 10px
+		line-height: 28px
+		i.material-icons
+			position: absolute
+			left: 6px
+			top: calc(50% - 8px)
+			font-size: 16px
+			color: #555
 	.btn.btn-icon--circle
 		height: 55px
 		width: 55px
@@ -28,3 +47,38 @@ body.admin
 			position: absolute
 			transform: translateX(-50%) translateY(-50%)
 			top: 50%
+	nav
+		.dropdown-menu
+			min-width: 7rem
+		.dropdown-item
+			padding: 0.25rem 1rem
+			position: relative
+			.material-icons
+				position: absolute
+				font-size: 20px
+				top: 7px
+				left: 20px
+			& > span
+				padding-left: 30px
+
+// 有錯誤的欄位會晃一下
+.is-invalid
+	animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both
+	transform: translate3d(0, 0, 0)
+	backface-visibility: hidden
+	perspective: 1000px
+@keyframes shake
+	10%, 90%
+		transform: translate3d(-1px, 0, 0)
+	20%, 80%
+		transform: translate3d(2px, 0, 0)
+	30%, 50%, 70%
+		transform: translate3d(-4px, 0, 0)
+	40%, 60%
+		transform: translate3d(4px, 0, 0)
+
+.awesomplete
+	display: block
+
+.pagination
+	justify-content: center
