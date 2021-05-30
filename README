@@ -1,0 +1,8 @@
+===========================
+application.js:
+  參考 admin.js 修改
+  引入 application.scss
+
+application.html.erb:
+  加上 namespace
+  拿掉 stylesheet_pack_tag 改用 application.js 導入 application.scss

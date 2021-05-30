@@ -221,20 +221,20 @@ copy_dashbaord_generator
 
 after_bundle do
   run "spring stop"
-  generate "pundit:install"
+  rails_command "generate pundit:install"
   `wheneverize .`
-  `rails active_storage:install`
+  rails_command "active_storage:install"
   generate_user_dashboard
-  `rails g model dbbackup name:string`
+  generate(:model, "dbbackup name:string")
   setup_dbbackup_rb
   # `rails db:environment:set RAILS_ENV=development`
   copy_gem_setting_files
   # setup_environment_js_for_bootstrap_in_webpack
   yarn_add_bootstrap
   copy_stimulus_files
-  `bin/rails hotwire:install`
-  `bin/rails action_text:install`
-  `rails g delayed_job:active_record`
-  `RAILS_ENV=development rails db:create db:migrate`
+  rails_command "hotwire:install"
+  rails_command "action_text:install"
+  rails_command "generate delayed_job:active_record"
+  rails_command "db:create db:migrate db:seed", env: 'development'
+  readme "README"
 end
-
