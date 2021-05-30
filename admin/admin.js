@@ -26,8 +26,4 @@ import 'flatpickr/dist/themes/dark.css'
 
 document.addEventListener("turbo:load", () => {
 	console.log('turboing')
-
-	if ( document.body.classList.contains('admin-users-index') ) {
-		tablesort(document.querySelector("#js-users-tablesort"), { descending: true })
-	}
 })
