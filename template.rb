@@ -109,7 +109,7 @@ def copy_stimulus_files
   copy_file "stimulus/tablesort_controller.js", "app/javascript/controllers/tablesort_controller.js"
   copy_file "stimulus/nested_form_controller.js", "app/javascript/controllers/nested_form_controller.js"
   copy_file "stimulus/toast_controller.js", "app/javascript/controllers/toast_controller.js"
-  copy_file "stimulus/tw_city_selector_controller.js", "app/javascript/controllers/tw_city_selector_controller.js"
+  # copy_file "stimulus/tw_city_selector_controller.js", "app/javascript/controllers/tw_city_selector_controller.js"
 end
 
 def override_files
@@ -164,15 +164,16 @@ def setup_delayed_job_on_production
 end
 
 def setup_environment_rb
-  append_to_file 'config/environment.rb' do <<-RUBY.strip_heredoc
-      
-      require "browser/aliases"
-      Browser::Base.include(Browser::Aliases)
-      ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
-        html_tag.html_safe
-      end
-    RUBY
-  end
+  initializer 'custom_extensions.rb', <<-CODE
+    # gem browser extensions
+    require "browser/aliases"
+    Browser::Base.include(Browser::Aliases)
+
+    # customize error
+    ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+      html_tag.html_safe
+    end
+  CODE
 end
 
 def copy_dashbaord_generator
