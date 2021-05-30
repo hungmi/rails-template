@@ -61,9 +61,14 @@ module Rails
       end
 
       def create_routes
-        inject_into_file 'config/routes.rb', after: "namespace :admin do\n" do
-          "\t\tresources :#{plural_name}\n"
-        end 
+        inject_into_file 'config/routes.rb', after: "namespace :admin do\n" do <<-HEREDOC
+    resources :#{plural_name}
+    namespace :#{plural_name} do
+      resources :archives, only: [:index, :create, :destroy]
+      resources :exports, only: [:index]
+    end
+          HEREDOC
+        end
       end
 
       # hook_for :resource_route, required: true
