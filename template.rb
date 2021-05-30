@@ -37,19 +37,12 @@ def create_admin_files
 end
 
 def create_admin_routes
-  route "root 'admin/users#index'"
+  route "resources :passwords, only: [:show, :edit, :update] # 重置密碼成功頁面, 改密碼的頁面, 密碼更新"
+  route "resources :resets, only: [:new, :show, :create] # 申請設定新密碼信件頁面, 設定新密碼信件已寄出頁面, 寄出設定新密碼信件", namespace: :passwords
+  route "resources :users", namespace: :admin
+  route "resources :sessions, only: [:new, :create, :destroy]"
   route "get 'admin', to: redirect('/admin/users')"
-  inject_into_file "config/routes.rb", before: /^end/ do <<-RUBY.strip_heredoc
-      resources :sessions, only: [:new, :create, :destroy]
-      resources :passwords, only: [:show, :edit, :update] # 重置密碼成功頁面, 改密碼的頁面, 密碼更新
-      namespace :passwords do
-        resources :resets, only: [:new, :show, :create] # 申請設定新密碼信件頁面, 設定新密碼信件已寄出頁面, 寄出設定新密碼信件
-      end
-      namespace :admin do
-        resources :users
-      end
-    RUBY
-  end
+  route "root 'admin/users#index'"
 end
 
 def setup_assets_rb
