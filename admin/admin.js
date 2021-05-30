@@ -2,7 +2,7 @@
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
-import 'bootstrap/dist/js/bootstrap'
+import { Tooltip, Toast, Popover } from 'bootstrap';
 
 import Rails from "@rails/ujs"
 import "@hotwired/turbo-rails"
@@ -19,6 +19,8 @@ require("@rails/actiontext")
 
 var tablesort = require('tablesort')
 import "../packs/sortable.js"
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../stylesheets/admin.sass'
 import 'flatpickr/dist/flatpickr.css'
 import 'flatpickr/dist/themes/dark.css'

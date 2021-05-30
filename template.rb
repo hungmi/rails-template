@@ -23,8 +23,8 @@ def create_admin_files
   copy_file "admin/admin.sass", "app/javascript/stylesheets/admin.sass"
   copy_file "admin/admin.js", "app/javascript/packs/admin.js"
   copy_file "admin/sortable.js", "app/javascript/packs/sortable.js"
-  copy_file "admin/bootstrap.min.css", "app/javascript/packs/stylesheets/bootstrap.min.css"
-  copy_file "admin/tablesort.min.css", "app/javascript/packs/stylesheets/tablesort.min.css"
+  # copy_file "admin/bootstrap.min.css", "app/javascript/stylesheets/bootstrap.min.css"
+  copy_file "admin/tablesort.min.css", "app/javascript/stylesheets/tablesort.min.css"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
@@ -186,7 +186,7 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
 end
 
 def yarn_add_bootstrap
-  `yarn add jquery bootstrap popper.js tablesort flatpickr`
+  `yarn add jquery bootstrap @popperjs/core tablesort flatpickr`
 end
 
 #---------------------
@@ -194,7 +194,7 @@ add_template_repository_to_source_path
 add_gems
 create_admin_files
 create_admin_routes
-setup_assets_rb
+# setup_assets_rb # 已經沒有使用 asset pipeline
 copy_sessions_files
 copy_passwords_files
 copy_password_resets_files
@@ -216,7 +216,7 @@ after_bundle do
   setup_dbbackup_rb
   `rails db:environment:set RAILS_ENV=development`
   copy_gem_setting_files
-  setup_environment_js_for_bootstrap_in_webpack
+  # setup_environment_js_for_bootstrap_in_webpack
   yarn_add_bootstrap
   copy_stimulus_files
   `bin/rails hotwire:install`
