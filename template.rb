@@ -37,6 +37,7 @@ def create_admin_files
 end
 
 def create_admin_routes
+  route "root 'admin/users#index'"
   route "get 'admin', to: redirect('/admin/users')"
   inject_into_file "config/routes.rb", before: /^end/ do <<-RUBY.strip_heredoc
       resources :sessions, only: [:new, :create, :destroy]

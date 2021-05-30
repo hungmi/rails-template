@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def new
     if user_signed_in?
-      redirect_to profile_users_path
+      redirect_to admin_path
     end
   end
 
