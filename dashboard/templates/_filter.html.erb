@@ -1,14 +1,14 @@
 <%%= search_form_for [:<%= options[:namespace] %>, @q] do |f| %>
-	<div class="form-row">
-    <div class="form-group col-12">
-      <%%= f.label :id_eq, I18n.t("text.filters.id_eq}") %>
+	<div class="row">
+    <div class="mb-3 col-xl-4 col-4">
+      <%%= f.label :id_eq, I18n.t("activerecord.attributes.<%= singular_table_name %>.filters.id_eq") %>
       <%%= f.search_field :id_eq, class: "form-control" %>
     </div>
 
 
     <!-- 日期類型 -->
     <%% if false %>
-    <div class="form-group col-lg-3 col-sm-4 col-xs-6">
+    <div class="mb-3 col-xl-4 col-4">
       <%%= f.label :created_at_gteq, "從" %>
       <%%= f.date_field :created_at_gteq, value: params[:q].try(:[], :created_at_gteq), max: params[:q].try(:[], :created_at_lteq) || (Time.zone.today - 1.day).strftime("%F"), class: "form-control form-control-sm" %>
     </div>
@@ -16,7 +16,7 @@
 
 		<!-- 單選 btn groups -->
 		<%% if false %>
-    <div class="form-group col-12">
+    <div class="mb-3 col-12">
       <div class="btn-group btn-group-toggle mt-3 pr-md-3" data-toggle="buttons">
         <%% Notebook.all.pluck(:name, :id).map do |name, id| %>
           <label class="btn <%%= id.to_s == params[:q].try(:[], :notebook_id_eq) ? 'btn-primary active' : 'btn-secondary' %>">
@@ -28,5 +28,5 @@
     <%% end %>
   </div>
   <%%= link_to I18n.t("text.clear"), admin_<%= plural_table_name %>_path, class: "btn btn-link text-danger btn-sm" %>
-  <%%= f.submit I18n.t("text.apply"), class: "btn btn-secondary float-right btn-sm" %>
+  <%%= f.submit I18n.t("text.apply"), class: "btn btn-secondary float-end btn-sm" %>
 <%% end %>
