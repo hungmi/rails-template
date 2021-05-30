@@ -18,7 +18,7 @@ module Rails
       def create_model
         unless options[:skip_creating_model]
           # creates the migration file for the model.
-          generate "model", "#{file_name} #{args.join(' ')}"
+          generate :model, "#{file_name} #{args.join(' ')}"
           load "app/models/#{singular_name}.rb" # avoid uninitialized contant error
         end
       end
@@ -51,7 +51,6 @@ module Rails
 
       def create_css_file
         copy_file "dashboard.sass", "app/javascript/stylesheets/#{options[:namespace]}/dashboard.sass"
-        template 'dashboard.sass', "app/assets/stylesheets/#{options[:namespace]}/dashboard.sass"
         append_file 'app/javascript/stylesheets/admin.sass' do
           "\n@import 'admin/dashboard'"
         end
