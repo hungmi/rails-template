@@ -191,7 +191,7 @@ environment.plugins.append('Provide', new webpack.ProvidePlugin({
   end
 end
 
-def yarn_add_bootstrap
+def yarn_add_libraries
   `yarn add tablesort flatpickr`
 end
 
@@ -224,7 +224,7 @@ after_bundle do
   # `rails db:environment:set RAILS_ENV=development`
   copy_gem_setting_files
   # setup_environment_js_for_bootstrap_in_webpack
-  yarn_add_bootstrap
+  yarn_add_libraries
   copy_stimulus_files
   rails_command "hotwire:install"
   rails_command "action_text:install"

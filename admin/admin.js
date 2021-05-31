@@ -18,7 +18,6 @@ require("@rails/actiontext")
 
 import "../packs/sortable.js"
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../stylesheets/admin.sass'
 import 'flatpickr/dist/flatpickr.css'
 import 'flatpickr/dist/themes/dark.css'
