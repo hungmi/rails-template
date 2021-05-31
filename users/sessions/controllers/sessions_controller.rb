@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       end
   	else
   		flash.now[:danger] = "您輸入的帳號密碼不正確"
-  		render :new
+  		render :new, status: :unauthorized
   	end
   end
 
