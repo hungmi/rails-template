@@ -6,3 +6,6 @@ application.js:
 application.html.erb:
   加上 namespace
   拿掉 stylesheet_pack_tag 改用 application.js 導入 application.scss
+
+tail.sh:
+  上線後可以使用 bash tail.sh 即時查看 production.log

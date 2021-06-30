@@ -195,6 +195,14 @@ def yarn_add_libraries
   `yarn add tablesort flatpickr`
 end
 
+def generate_tail_script
+  @private_ssh_key = ask("deploy private ssh key name:")
+  @private_ssh_key ||= 'xxxxxx'
+  @server_ip = ask("server ip:")
+  @server_ip ||= 'xxx.xx.xxx.xx'
+  template 'tail.sh', 'tail.sh'
+end
+
 #---------------------
 add_template_repository_to_source_path
 add_gems
@@ -230,5 +238,6 @@ after_bundle do
   rails_command "action_text:install"
   rails_command "generate delayed_job:active_record"
   rails_command "db:create db:migrate db:seed", env: 'development'
+  generate_tail_script
   readme "README"
 end
