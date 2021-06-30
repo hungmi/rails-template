@@ -199,6 +199,7 @@ def generate_tail_script
   @private_ssh_key = ask("deploy private ssh key name: ", default: 'xxxxxx')
   @server_ip = ask("server ip: ", default: 'xxx.xx.xxx.xx')
   template 'tail.sh', 'tail.sh'
+  template 'server.sh', 'server.sh'
   template 'server/deploy/production.rb', 'server/deploy/production.rb'
 end
 
