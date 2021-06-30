@@ -11,5 +11,10 @@ end
 
 # fix deprecation, check https://edgeguides.rubyonrails.org/autoloading_and_reloading_constants.html#autoloading-when-the-application-boots
 Rails.application.reloader.to_prepare do
-	OmniAuth.config.on_failure = Facebook::UsersController.action(:oauth_failure)
+	OmniAuth.config.on_failure = Oauth::UsersController.action(:oauth_failure)
 end
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :google_oauth2, Rails.application.credentials.dig(:google_client_id), Rails.application.credentials.dig(:google_client_secret)
+end
+OmniAuth.config.allowed_request_methods = %i[get]

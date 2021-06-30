@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  match 'auth/:provider/callback', to: 'facebook/users#create', via: [:get]
+  match 'auth/:provider/callback', to: 'oauth/users#create', via: [:get]
   resources :users, only: [:show, :edit, :update] do # 會員中心頁面, 編輯頁面, 會員資料更新
     collection do
       get "/profile", to: "users#show" # 會員中心頁面(取代 users/:id)
