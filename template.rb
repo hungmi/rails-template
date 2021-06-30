@@ -203,6 +203,12 @@ def generate_tail_script
   template 'tail.sh', 'tail.sh'
 end
 
+def generate_nginx_conf
+  @domain = ask("Domain without https (example.com): ")
+  @domain ||= 'example.com'
+  template 'nginx.conf', 'nginx.conf'
+end
+
 #---------------------
 add_template_repository_to_source_path
 add_gems
@@ -239,5 +245,6 @@ after_bundle do
   rails_command "generate delayed_job:active_record"
   rails_command "db:create db:migrate db:seed", env: 'development'
   generate_tail_script
+  generate_nginx_conf
   readme "README"
 end

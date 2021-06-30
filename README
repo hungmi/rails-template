@@ -9,3 +9,6 @@ application.html.erb:
 
 tail.sh:
   上線後可以使用 bash tail.sh 即時查看 production.log
+
+nginx.conf:
+  已經假設會直接加上 letsencrypt 的檔案，沒辦法直接使用，請直接複製到 server 並進行 certbot 步驟
