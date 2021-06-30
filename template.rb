@@ -206,19 +206,19 @@ end
 def generate_nginx_conf
   @domain = ask("Domain without https (example.com): ")
   @domain ||= 'example.com'
-  template 'nginx.conf', 'nginx.conf'
+  template 'server/nginx.conf', 'server/nginx.conf'
 end
 
 def generate_puma_service
-  template 'puma.service', 'puma.service'
+  template 'server/puma.service', 'server/puma.service'
 end
 
 def generate_logrotate_conf
-  template 'logrotate.conf', 'logrotate.conf'
+  template 'server/logrotate.conf', 'server/logrotate.conf'
 end
 
 def generate_delayed_job_monitrc
-  template 'delayed_job.monitrc', 'delayed_job.monitrc'
+  template 'server/delayed_job.monitrc', 'server/delayed_job.monitrc'
 end
 
 #---------------------
