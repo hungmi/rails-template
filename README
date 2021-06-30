@@ -1,16 +1,17 @@
 ===========================
+部署筆記：https://gist.github.com/hungmi/87ad36ebe61bb69ee604d4dc82dfdce8
+
 application.js:
   參考 admin.js 修改
   引入 application.scss
 
 application.html.erb:
-  加上 namespace
-  拿掉 stylesheet_pack_tag 改用 application.js 導入 application.scss
+  body 加上 css namespace
 
 tail.sh:
   上線後可以使用 bash tail.sh 即時查看 production.log
 
-server:
+server 後續行動:
   nginx.conf:
     已經假設會直接加上 letsencrypt 的檔案，沒辦法直接使用，請直接複製到 server 並進行 certbot 步驟
   puma.service:
@@ -21,3 +22,5 @@ server:
     sudo vim /etc/logrotate.conf
   delayed_job.monitrc:
     /etc/monit/monitrc 打開 http 支援的四行，並 include delayed_job 設定檔
+  .pgpass:
+    sudo chmod 600 /home/deploy/.pgpass

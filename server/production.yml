@@ -1,0 +1,13 @@
+ecpay:
+  merchant_id: "MERCHANT_ID"
+  hash_key: "HASH_KEY"
+  hash_iv: "HASH_IV"
+  url: "https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5"
+ses:
+  username: "AWS_KEY"
+  password: "AWS_SECRET"
+fb_app_id: "FB_APP_ID"
+fb_app_secret: "FB_SECRET"
+gcs: "/home/deploy/<%= @app_name %>/shared/gcs.json"
+secret_key_base: "NEW_SECRET"
+db_url: "postgres://deploy:<%= @pg_password %>@127.0.0.1/<%= @app_name %>"

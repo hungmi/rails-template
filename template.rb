@@ -196,16 +196,14 @@ def yarn_add_libraries
 end
 
 def generate_tail_script
-  @private_ssh_key = ask("deploy private ssh key name:")
-  @private_ssh_key ||= 'xxxxxx'
-  @server_ip = ask("server ip:")
-  @server_ip ||= 'xxx.xx.xxx.xx'
+  @private_ssh_key = ask("deploy private ssh key name: ", default: 'xxxxxx')
+  @server_ip = ask("server ip: ", default: 'xxx.xx.xxx.xx')
   template 'tail.sh', 'tail.sh'
+  template 'server/deploy/production.rb', 'server/deploy/production.rb'
 end
 
 def generate_nginx_conf
-  @domain = ask("Domain without https (example.com): ")
-  @domain ||= 'example.com'
+  @domain = ask("Domain without https: ", default: 'example.com')
   template 'server/nginx.conf', 'server/nginx.conf'
 end
 
@@ -219,6 +217,37 @@ end
 
 def generate_delayed_job_monitrc
   template 'server/delayed_job.monitrc', 'server/delayed_job.monitrc'
+end
+
+def generate_pg_pass
+  try_again = true
+  while try_again
+    @pg_password = ask("PG password: ", default: 'fakepassword')
+    if @pg_password == 'fakepassword'
+      try_again = false
+    else
+      @pg_password_confirmation = ask("Again: ", default: 'fakepassword')
+      if @pg_password == @pg_password_confirmation
+        try_again = false
+      else
+        try_again = yes?('Not match, again? (y/n): ')
+        (@pg_password = @pg_password_confirmation = 'fakepassword') unless try_again
+      end
+    end
+  end
+
+  if @pg_password == 'fakepassword' || @pg_password == @pg_password_confirmation
+    template 'server/.pgpass', 'server/.pgpass'
+    template 'server/production.yml', 'server/production.yml'
+  end
+end
+
+def generate_deploy_rb
+  template 'server/deploy.rb', 'server/deploy.rb'
+end
+
+def copy_readme
+  copy_file "README", "README"
 end
 
 #---------------------
@@ -256,10 +285,15 @@ after_bundle do
   rails_command "action_text:install"
   rails_command "generate delayed_job:active_record"
   rails_command "db:create db:migrate db:seed", env: 'development'
+  say "安裝完畢，接下來產生部署檔案吧：", :bold
   generate_tail_script
   generate_nginx_conf
   generate_puma_service
   generate_logrotate_conf
   generate_delayed_job_monitrc
+  generate_pg_pass
+  generate_deploy_rb
+  copy_readme
+  say "設定完畢，準備上火車囉～！", :green
   readme "README"
 end
