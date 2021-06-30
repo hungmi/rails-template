@@ -209,6 +209,18 @@ def generate_nginx_conf
   template 'nginx.conf', 'nginx.conf'
 end
 
+def generate_puma_service
+  template 'puma.service', 'puma.service'
+end
+
+def generate_logrotate_conf
+  template 'logrotate.conf', 'logrotate.conf'
+end
+
+def generate_delayed_job_monitrc
+  template 'delayed_job.monitrc', 'delayed_job.monitrc'
+end
+
 #---------------------
 add_template_repository_to_source_path
 add_gems
@@ -246,5 +258,8 @@ after_bundle do
   rails_command "db:create db:migrate db:seed", env: 'development'
   generate_tail_script
   generate_nginx_conf
+  generate_puma_service
+  generate_logrotate_conf
+  generate_delayed_job_monitrc
   readme "README"
 end

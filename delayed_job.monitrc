@@ -1,0 +1,4 @@
+check process delayed_job
+  with pidfile /home/deploy/<%= app_name %>/shared/tmp/pids/delayed_job.pid
+  start program = "/bin/su - deploy -c 'cd /home/deploy/<%= app_name %>/current && /usr/bin/env RAILS_ENV=production /home/deploy/.rbenv/shims/bundle exec bin/delayed_job -n 1 start'"
+  stop program = "/bin/su - deploy -c 'cd /home/deploy/<%= app_name %>/current && /usr/bin/env RAILS_ENV=production /home/deploy/.rbenv/shims/bundle exec bin/delayed_job stop'"

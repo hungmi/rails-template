@@ -1,0 +1,18 @@
+[Unit]
+Description=Puma HTTP Server for <%= @app_name %> production
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/home/deploy/<%= @app_name %>/current
+ExecStart=/home/deploy/.rbenv/shims/bundle exec bundle exec puma -C /home/deploy/<%= @app_name %>/shared/puma.rb
+ExecReload=/bin/kill -TSTP $MAINPID
+ExecStop=/bin/kill -TERM $MAINPID
+StandardOutput=append:/home/deploy/<%= @app_name %>/shared/log/puma_access.log
+StandardError=append:/home/deploy/<%= @app_name %>/shared/log/puma_error.log
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
