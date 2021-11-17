@@ -6,6 +6,10 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
   def index
     authorize [:<%= options[:namespace] %>, :<%= singular_table_name %>], :index?
     @pagy, @<%= plural_table_name %> = pagy(@q.result(distinct: true).order(updated_at: :desc), items: 20)
+    respond_to do |format|
+      format.html
+      format.csv { send_data @q.result(distinct: true).order(updated_at: :desc).to_csv, filename: "#{<%= class_name.constantize %>.model_name.human}-#{Date.today}.csv" }
+    end
   end
 
   # GET <%= route_url %>/1

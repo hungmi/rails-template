@@ -19,6 +19,20 @@ module Rails
         unless options[:skip_creating_model]
           # creates the migration file for the model.
           generate :model, "#{file_name} #{args.join(' ')}"
+          inject_into_file "app/models/#{singular_name}.rb", before: "end" do <<-RUBY
+  require 'csv'
+  def self.to_csv
+    attributes = %w{ id #{attributes_names.join(' ')} }
+    CSV.generate("\\uFEFF", headers: true) do |csv|
+      csv << attributes.map { |attr_name| #{class_name}.human_attribute_name(attr_name) }
+
+      all.each do |record|
+        csv << attributes.map { |attr| record.send(attr) }
+      end
+    end
+  end
+            RUBY
+          end
           load "app/models/#{singular_name}.rb" # avoid uninitialized contant error
         end
       end
