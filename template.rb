@@ -174,7 +174,7 @@ def setup_dbbackup_rb
 end
 
 def yarn_add_libraries
-  `yarn add tablesort flatpickr sass bootstrap @popperjs/core`
+  `yarn add tablesort awesomplete flatpickr sass bootstrap @popperjs/core`
 end
 
 def generate_tail_script
