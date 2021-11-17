@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import flatpickr from "flatpickr"
 import "flatpickr/dist/l10n/zh-tw.js"
 

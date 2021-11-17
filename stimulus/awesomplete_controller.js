@@ -2,7 +2,7 @@
 //     <input data-awesomplete-target='input'>
 // </div>
 
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import Awesomplete from 'awesomplete'
 
 export default class extends Controller {

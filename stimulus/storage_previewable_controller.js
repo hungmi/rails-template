@@ -1,6 +1,6 @@
 // 搭配 partial _image_field, _image_field 使用
 
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
 	static targets = [ "fileInput", "oldImage", "previewer" ]
