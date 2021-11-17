@@ -16,4 +16,4 @@ done
 
 echo $LINE
 
-ssh -i ~/.ssh/<%= @private_ssh_key %> deploy@<%= server_ip %> tail -f /home/deploy/<%= app_name %>/shared/log/production.log -n $LINE
+ssh -i ~/.ssh/<%= @private_ssh_key %> deploy@<%= @server_ip %> tail -f /home/deploy/<%= app_name %>/shared/log/production.log -n $LINE
