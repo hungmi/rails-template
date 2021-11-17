@@ -1,36 +1,42 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-  <a class="navbar-brand" href="/admin">管理者後台</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/admin">管理者後台</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <%% ["user"].each do |singular_name| %>
-      <li class='nav-item <%%= 'active' if controller_name == singular_name.pluralize %>'>
-        <a class="nav-link py-sm-2 py-3" href="/admin/<%%= singular_name.pluralize %>"><%%= I18n.t("activerecord.models.#{singular_name}") %></a>
-      </li>
-      <%% end %>
-    </ul>
-    <%% if user_signed_in? %>
-      <ul class="navbar-nav ml-sm-5 ml-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            管理者
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%%= link_to admin_user_path(current_user), class: "dropdown-item" do %>
-              <i class="material-icons" style="position: absolute;">&#xE7FD;</i> <span style="padding-left: 30px;">個人資料</span>
-            <%% end %>
-            <div class="dropdown-divider"></div>
-            <%%= link_to session_path(id: current_user.id), class: "dropdown-item", method: :delete do %>
-              <i class="material-icons">&#xE879;</i> <span>登出</span>
-            <%% end %>
-          </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <%% ["user"].each do |singular_name| %>
+        <li class='nav-item'>
+          <a class="nav-link py-sm-2 py-3 <%%= 'active' if controller_name == singular_name.pluralize %>" href="/admin/<%%= singular_name.pluralize %>"><%%= I18n.t("activerecord.models.#{singular_name}") %></a>
         </li>
-        <li class="nav-item active">
-        </li>
+        <%% end %>
       </ul>
-    <%% end %>
+      <%% if user_signed_in? %>
+        <ul class="navbar-nav ms-sm-5 ms-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              管理者
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li>
+                <%%= link_to admin_user_path(current_user), class: "dropdown-item" do %>
+                  <i class="material-icons" style="position: absolute;">&#xE7FD;</i> <span style="padding-left: 30px;">個人資料</span>
+                <%% end %>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%%= link_to session_path(id: current_user.id), class: "dropdown-item", method: :delete do %>
+                  <i class="material-icons">&#xE879;</i> <span>登出</span>
+                <%% end %>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item active">
+          </li>
+        </ul>
+      <%% end %>
+    </div>
   </div>
 </nav>
