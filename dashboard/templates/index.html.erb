@@ -1,3 +1,5 @@
+<%%= toasts %>
+
 <%% if controller_name == 'archives' %>
 	<%%= render partial: "admin/common/archives_resources_header", locals: { resource_name: <%= class_name.constantize %>.model_name.human, index: admin_<%= plural_table_name %>_path } %>
 <%% else %>
