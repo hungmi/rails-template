@@ -21,6 +21,7 @@ def create_admin_files
   copy_file "admin/admin_controller.rb", "app/controllers/admin_controller.rb"
   copy_file "admin/admin_policy.rb", "app/policies/admin_policy.rb"
   copy_file "admin/admin.sass", "app/assets/stylesheets/admin.sass"
+  append_to_file "app/assets/config/manifest.js", %(//= link admin.css)
   copy_file "admin/admin.js", "app/javascript/admin.js"
   copy_file "admin/sortable.js", "app/javascript/sortable.js"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
