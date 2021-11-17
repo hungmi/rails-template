@@ -3,25 +3,15 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-import Rails from "@rails/ujs"
 import "@hotwired/turbo-rails"
+import "./controllers"
+import "trix"
+import "@rails/actiontext"
 import * as ActiveStorage from "@rails/activestorage"
-import "channels"
-
-Rails.start()
 ActiveStorage.start()
 
-import "controllers"
-
-require("trix")
-require("@rails/actiontext")
-
-import "../packs/sortable.js"
-
-import '../stylesheets/admin.sass'
-import 'flatpickr/dist/flatpickr.css'
-import 'flatpickr/dist/themes/dark.css'
+import "./sortable.js"
 
 document.addEventListener("turbo:load", () => {
-	console.log('turboing')
+	console.log('turbo!')
 })
