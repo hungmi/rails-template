@@ -20,11 +20,9 @@ end
 def create_admin_files
   copy_file "admin/admin_controller.rb", "app/controllers/admin_controller.rb"
   copy_file "admin/admin_policy.rb", "app/policies/admin_policy.rb"
-  copy_file "admin/admin.sass", "app/javascript/stylesheets/admin.sass"
-  copy_file "admin/admin.js", "app/javascript/packs/admin.js"
-  copy_file "admin/sortable.js", "app/javascript/packs/sortable.js"
-  # copy_file "admin/bootstrap.min.css", "app/javascript/stylesheets/bootstrap.min.css"
-  copy_file "admin/tablesort.min.css", "app/javascript/stylesheets/tablesort.min.css"
+  copy_file "admin/admin.sass", "app/assets/stylesheets/admin.sass"
+  copy_file "admin/admin.js", "app/javascript/admin.js"
+  copy_file "admin/sortable.js", "app/javascript/sortable.js"
   template "admin/admin.html.erb", "app/views/layouts/admin.html.erb"
   copy_file "admin/admin_helper.rb", "app/helpers/admin_helper.rb"
   template '_nav_top.html.erb', "app/views/admin/common/_nav_top.html.erb"
@@ -46,11 +44,7 @@ def create_admin_routes
 end
 
 def setup_assets_rb
-  append_to_file 'config/initializers/assets.rb' do <<-RUBY.strip_heredoc
-
-      Rails.application.config.assets.precompile += %w( admin.js admin.css )
-    RUBY
-  end
+  append_to_file 'config/initializers/assets.rb' %(Rails.application.config.assets.paths << Rails.root.join('node_modules')\n)
 end
 
 ## 以下生成管理員、登入頁、登入授權
@@ -66,7 +60,7 @@ def generate_user_dashboard
 end
 
 def copy_sessions_files
-  copy_file "users/sessions/css/sessions.sass", "app/javascript/stylesheets/sessions.sass"
+  copy_file "users/sessions/css/sessions.sass", "app/assets/stylesheets/sessions.sass"
   template "users/sessions/views/new.html.erb", "app/views/sessions/new.html.erb"
   copy_file "users/sessions/controllers/sessions_controller.rb", "app/controllers/sessions_controller.rb"
 end
@@ -96,20 +90,15 @@ end
 
 ## 以上生成管理員、登入頁、登入授權
 
-def copy_stimulus_files
-  copy_file "stimulus/storage_previewable_controller.js", "app/javascript/controllers/storage_previewable_controller.js"
-  copy_file "stimulus/flat_pickr_controller.js", "app/javascript/controllers/flat_pickr_controller.js"
-  copy_file "stimulus/tablesort_controller.js", "app/javascript/controllers/tablesort_controller.js"
-  copy_file "stimulus/nested_form_controller.js", "app/javascript/controllers/nested_form_controller.js"
-  copy_file "stimulus/toast_controller.js", "app/javascript/controllers/toast_controller.js"
-  # copy_file "stimulus/tw_city_selector_controller.js", "app/javascript/controllers/tw_city_selector_controller.js"
+def copy_stimulus_controllers
+  directory "stimulus", "app/javascript/controllers"
+  rails_command "stimulus:manifest:update"
 end
 
 def override_files
   copy_file "application_controller.rb", "app/controllers/application_controller.rb", force: true
   copy_file "application_helper.rb", "app/helpers/application_helper.rb", force: true
-  remove_file "app/assets/stylesheets/application.css"
-  template "application.scss", "app/javascript/stylesheets/application.scss"
+  # remove_file "app/assets/stylesheets/application.css"
 end
 
 def add_gems
@@ -130,6 +119,9 @@ def add_gems
   gem 'whenever', require: false
   gem 'image_processing', '~> 1.2'
   gem 'mimemagic', '~> 0.3.10' # 因為此gem某些版本已被移除，因此需要指定版本
+  gem 'uglifier'
+  gem 'jsbundling-rails'
+  gem 'cssbundling-rails'
   gem 'hotwire-rails'
 end
 
@@ -180,19 +172,8 @@ def setup_dbbackup_rb
   end
 end
 
-def setup_environment_js_for_bootstrap_in_webpack
-  insert_into_file "config/webpack/environment.js", after: "const { environment } = require('@rails/webpacker')\n" do
-    "const webpack = require('webpack')
-environment.plugins.append('Provide', new webpack.ProvidePlugin({
-  $: 'jquery',
-  jQuery: 'jquery',
-  Popper: ['popper.js', 'default']
-}))"
-  end
-end
-
 def yarn_add_libraries
-  `yarn add tablesort flatpickr`
+  `yarn add tablesort flatpickr sass bootstrap @popperjs/core`
 end
 
 def generate_tail_script
@@ -256,7 +237,7 @@ add_template_repository_to_source_path
 add_gems
 create_admin_files
 create_admin_routes
-# setup_assets_rb # 已經沒有使用 asset pipeline
+setup_assets_rb
 copy_sessions_files
 copy_passwords_files
 copy_password_resets_files
@@ -279,13 +260,15 @@ after_bundle do
   setup_dbbackup_rb
   # `rails db:environment:set RAILS_ENV=development`
   copy_gem_setting_files
-  # setup_environment_js_for_bootstrap_in_webpack
-  yarn_add_libraries
-  copy_stimulus_files
+  rails_command "css:install:sass"
+  rails_command "javascript:install:esbuild"
   rails_command "hotwire:install"
   rails_command "action_text:install"
   rails_command "generate delayed_job:active_record"
   rails_command "db:create db:migrate db:seed", env: 'development'
+  yarn_add_libraries
+  append_to_file "app/assets/stylesheets/application.sass.scss", %(@import "sessions";\n)
+  copy_stimulus_controllers
   say "安裝完畢，接下來產生部署檔案吧：", :bold
   generate_tail_script
   generate_nginx_conf
