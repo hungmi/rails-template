@@ -268,7 +268,7 @@ after_bundle do
   rails_command "generate delayed_job:active_record"
   rails_command "db:create db:migrate db:seed", env: 'development'
   yarn_add_libraries
-  append_to_file "app/assets/stylesheets/application.sass.scss", %(@import "sessions";\n)
+  append_to_file "app/assets/stylesheets/application.sass.scss", %(@import "bootstrap/scss/bootstrap";\n@import "sessions";\n)
   copy_stimulus_controllers
   say "安裝完畢，接下來產生部署檔案吧：", :bold
   generate_tail_script
