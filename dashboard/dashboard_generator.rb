@@ -51,9 +51,7 @@ module Rails
 
       def create_css_file
         copy_file "dashboard.sass", "app/assets/stylesheets/#{options[:namespace]}/dashboard.sass"
-        append_file 'app/assets/stylesheets/admin.sass' do
-          "\n@import 'admin/dashboard'"
-        end
+        append_to_file 'app/assets/stylesheets/admin.sass', %(@import 'admin/dashboard'\n)
       end
 
       def copy_helper_file
