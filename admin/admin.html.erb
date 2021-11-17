@@ -6,23 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
-    <%%#= stylesheet_pack_tag 'admin', media: 'all', 'data-turbo-track': 'reload' %>
+    <&%= stylesheet_link_tag 'admin', media: 'all', 'data-turbo-track': 'reload' %>
     <%%= csrf_meta_tags %>
     <%%= csp_meta_tag %>
     <%%#= favicon_link_tag "favicon.ico" %>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    <%%= javascript_pack_tag 'admin', 'data-turbo-track': 'reload' %>
-    <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet">
+    <%%= javascript_include_tag 'admin', 'data-turbo-track': 'reload' %>
+    <!-- <link href="https://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body class='admin <%%= "admin-#{controller_name}-#{action_name}" %>'>
+<body class='admin <%%= "admin-#{controller_name}-#{action_name}" %>' data-controller="toaster">
     <%%= render "admin/common/nav_top" if user_signed_in? %>
     <div class="container">
-        <%%= toast_message %>
         <h1 data-controller="hello" data-target="hello.output"></h1>
         <%%= yield %>
     </div>
+
+    <div id="toasts" class="toast-container position-fixed end-0 p-3 d-flex align-items-end flex-column" style="top: 40px; z-index: 1001;" aria-live="polite" aria-atomic="true" data-controller="toast" data-toaster-target="toastrack"></div>
 </body>
 </html>

@@ -14,16 +14,19 @@ module ApplicationHelper
     end
   end
 
-  def toast_message(opts = {})
+  def toasts(opts = {})
     if flash.any?
-      flash.map do |type, message|
-        content_tag :div, class: "toast d-flex align-items-center text-white bg-#{type} border-0", style: 'position: fixed; left: 3.5vw; bottom: 3.5vw; z-index: 9999;', role: "alert", aria: { live: 'assertive', atomic: true }, data: { controller: 'toast' } do
-          content_tag :div, class: "toast-body" do
-            message
+      capture do
+        flash.map do |type, message|
+          message_html = content_tag :div, class: "flash-message toast align-items-center bg-dark opacity-75 text-white border border-0 rounded-pill w-auto", role: "alert", aria: { live: 'assertive', atomic: true }, 'data-toast-target': 'toast', 'data-toaster-target': 'toast' do
+            content_tag :div, class: "toast-body px-4 d-flex" do
+              message.html_safe
+            end
+            # button_tag nil, type: 'button', class: "btn-close ms-auto me-2", data: { bs_dismiss: "toast" }, aria: { label: 'Close' }
           end
-          # button_tag nil, type: 'button', class: "btn-close ms-auto me-2", data: { bs_dismiss: "toast" }, aria: { label: 'Close' }
+          concat message_html
         end
-      end[0]
+      end
     end
   end
 
