@@ -115,7 +115,6 @@ def add_gems
   gem 'ransack', github: 'activerecord-hackery/ransack'
   gem "aws-sdk-s3", require: false
   gem 'bcrypt', '~> 3.1.7'
-  gem 'redis', '~> 4.0'
   gem 'pagy'
   gem 'whenever', require: false
   gem 'image_processing', '~> 1.2'
@@ -124,6 +123,7 @@ def add_gems
   gem 'jsbundling-rails'
   gem 'cssbundling-rails'
   gem 'hotwire-rails'
+  gem 'turbo-rails', '< 1.0' # fix yanked version error
   gem "autoprefixer-rails"
 end
 
