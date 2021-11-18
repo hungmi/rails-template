@@ -124,6 +124,7 @@ def add_gems
   gem 'jsbundling-rails'
   gem 'cssbundling-rails'
   gem 'hotwire-rails'
+  gem "autoprefixer-rails"
 end
 
 def copy_gem_setting_files
