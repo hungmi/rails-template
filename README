@@ -24,3 +24,11 @@ server 後續行動:
     /etc/monit/monitrc 打開 http 支援的四行，並 include delayed_job 設定檔
   .pgpass:
     sudo chmod 600 /home/deploy/.pgpass
+
+若要上 Heroku:
+  要到 Heroku 上加一個 PG，並稍等幾分鐘
+  加 Procfile
+  可能要跑 bundle lock --add-platform x86_64-linux
+  設定 env/production.rb 的 storage 為有效服務。不然就先設定 :local
+  設定 ENV RAILS_MASTER_KEY
+  database.yml 不需要 username & password
