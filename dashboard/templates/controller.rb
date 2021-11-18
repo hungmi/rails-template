@@ -33,9 +33,9 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
 
     if @<%= orm_instance.save %>
       flash[:notice] = "<span class='text-success me-1 fs-5 fw-bold lh-1'>&check;</span> #{I18n.t('flash.create_success')}"
-      redirect_to edit_<%= options[:namespace] %>_<%= singular_table_name %>_path(@<%= singular_table_name %>)
+      redirect_to <%= options[:namespace] %>_<%= plural_table_name %>_path(anchor: "<%= singular_table_name %>-#{@<%= singular_table_name %>.id}")
     else
-      flash.now[:danger] = "<span class='text-danger me-1 fs-5 fw-bold lh-1'>&cross;</span> #{I18n.t('flash.update_failed')}"
+      flash.now[:danger] = "<span class='text-danger me-1 fs-5 fw-bold lh-1'>&cross;</span> #{I18n.t('flash.create_failed')}"
       render :new, status: :unprocessable_entity
     end
   end
@@ -43,7 +43,7 @@ class <%= "#{options[:namespace].camelize}::#{plural_table_name.camelize}" %>Con
   # PATCH/PUT <%= route_url %>/1
   def update
     if @<%= orm_instance.update("#{singular_table_name}_params") %>
-      flash[:notice] = "<span class='text-success me-1 fs-5 fw-bold lh-1'>&check;</span> #{I18n.t('flash.create_success')}"
+      flash[:notice] = "<span class='text-success me-1 fs-5 fw-bold lh-1'>&check;</span> #{I18n.t('flash.update_success')}"
       redirect_to <%= options[:namespace] %>_<%= plural_table_name %>_path(anchor: "<%= singular_table_name %>-#{@<%= singular_table_name %>.id}")
     else
       flash.now[:danger] = "<span class='text-danger me-1 fs-5 fw-bold lh-1'>&cross;</span> #{I18n.t('flash.update_failed')}"

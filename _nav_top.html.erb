@@ -27,7 +27,7 @@
               </li>
               <li><hr class="dropdown-divider"></li>
               <li>
-                <%%= link_to session_path(id: current_user.id), class: "dropdown-item", method: :delete do %>
+                <%%= button_to session_path(id: current_user.id), class: "dropdown-item", method: :delete do %>
                   <i class="material-icons">&#xE879;</i> <span>登出</span>
                 <%% end %>
               </li>

@@ -8,6 +8,7 @@
 		<%% <%= plural_table_name %>.map do |<%= singular_table_name %>| %>
 			<tr><% attributes_names.map do |name| %>
 				<td><%%= <%= singular_table_name %>.<%= name %> %></td><% end %>
+				<td><%%= link_to I18n.t('text.edit'), edit_admin_<%= singular_table_name %>_path(<%= singular_table_name %>), 'data-turbo': false %></td>
 			</tr>
 		<%% end %>
 	</tbody>

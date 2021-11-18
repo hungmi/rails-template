@@ -2,7 +2,7 @@
     <%%= search_form_for [:<%= options[:namespace] %>, @q], data: { turbo_frame: "admin_<%= plural_table_name %>_table" } do |f| %>
         <div class="row">
             <div class="mb-3 col-xl-4 col-4">
-                <%%= f.label :id_eq, I18n.t("activerecord.attributes.<%= singular_table_name %>.filters.id_eq") %>
+                <%%= f.label :id_eq, I18n.t("activerecord.attributes.<%= singular_table_name %>.filters.id_eq"), class: 'mb-1' %>
                 <%%= f.search_field :id_eq, class: "form-control" %>
             </div>
 
@@ -27,7 +27,7 @@
                 </div>
             <%% end %>
         </div>
-        <%%= link_to I18n.t("text.clear"), admin_<%= plural_table_name %>_path, class: "btn btn-link text-danger btn-sm", data: { turbo_frame: "_top" } %>
-        <%%= f.submit I18n.t("text.apply"), class: "btn btn-secondary float-end btn-sm" %>
+        <%%= f.submit I18n.t("text.apply"), class: "btn btn-secondary btn-sm" %>
+        <%%= link_to I18n.t("text.clear"), admin_<%= plural_table_name %>_path, class: "btn btn-link text-danger btn-sm float-end", data: { turbo_frame: "_top" } %>
     <%% end %>
 <%% end %>
