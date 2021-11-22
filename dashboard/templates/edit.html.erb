@@ -1,4 +1,4 @@
-<%%= link_to <%= options[:namespace] %>_<%= plural_route_name %>_path(anchor: "<%= model_resource_name %>-#{@<%= model_resource_name %>.id}"), class: "btn btn-link" do %>
+<%%= link_to <%= options[:namespace] %>_<%= plural_route_name %>_path(anchor: "<%= model_resource_name %>-#{@<%= model_resource_name %>.id}"), class: "btn btn-link text-decoration-none" do %>
   &#8592; <%%= I18n.t('text.back') %>
 <%% end %>
 <h1 class="h2"><%%= I18n.t('text.edit') %><%%= <%= class_name.constantize %>.model_name.human %></h1>
