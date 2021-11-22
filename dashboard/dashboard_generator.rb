@@ -27,7 +27,13 @@ module Rails
       csv << attributes.map { |attr_name| #{class_name}.human_attribute_name(attr_name) }
 
       all.each do |record|
-        csv << attributes.map { |attr| record.send(attr) }
+        csv << attributes.map do |attr|
+          value = record.send(attr)
+          if value.respond_to? :to_plain_text
+            value = value.to_plain_text
+          end
+          value
+        end
       end
     end
   end
