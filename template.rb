@@ -20,7 +20,7 @@ end
 def create_admin_files
   copy_file "admin/admin_controller.rb", "app/controllers/admin_controller.rb"
   copy_file "admin/admin_policy.rb", "app/policies/admin_policy.rb"
-  copy_file "admin/admin.sass", "app/assets/stylesheets/admin.sass"
+  copy_file "admin/admin.scss", "app/assets/stylesheets/admin.scss"
   append_to_file "app/assets/config/manifest.js", %(//= link admin.css\n)
   copy_file "admin/admin.js", "app/javascript/admin.js"
   copy_file "admin/sortable.js", "app/javascript/sortable.js"
@@ -266,6 +266,7 @@ after_bundle do
   rails_command "javascript:install:esbuild"
   rails_command "hotwire:install"
   rails_command "action_text:install"
+  gsub_file 'app/assets/stylesheets/actiontext.scss', %(//= require trix/dist/trix), %(@import "trix/dist/trix";)
   rails_command "generate delayed_job:active_record"
   rails_command "db:create db:migrate db:seed", env: 'development'
   yarn_add_libraries

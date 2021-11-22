@@ -1,8 +1,9 @@
-@import "tablesort/tablesort"
-@import 'bootstrap/scss/bootstrap'
-@import 'flatpickr/dist/themes/airbnb'
-@import "actiontext"
-@import "admin/dashboard"
-body, html
+@import "tablesort/tablesort";
+@import 'bootstrap/scss/bootstrap';
+@import 'flatpickr/dist/themes/airbnb';
+@import "actiontext";
+@import "admin/dashboard";
+body, html {
 	font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Ubuntu,Helvetica Neue,Helvetica,PingFang TC,Noto Sans TC,Source Han Sans TC,sans-serif
 	background-color: #e9ebee
+}
